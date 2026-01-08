@@ -4,10 +4,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Cpu, Music, Globe } from "lucide-react";
 import { useUIStore } from "@/store/useUIStore";
 import { projects } from "@/data/projects";
+import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 export default function ProjectModal() {
     const { isModalOpen, selectedProjectId, closeModal } = useUIStore();
+    const { playClick } = useSoundEffects();
     const project = projects.find(p => p.id === selectedProjectId);
+
+    // Fonction de redirection avec son
+    const handleLiveView = (url?: string) => {
+        if (!url) return;
+        playClick();
+
+        // On ouvre le lien dans un nouvel onglet
+        window.open(url, "_blank", "noopener,noreferrer");
+    };
 
     if (!project) return null;
 
@@ -30,6 +41,7 @@ export default function ProjectModal() {
                         className="relative w-full max-w-4xl bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
                     >
                         <div className="grid grid-cols-1 md:grid-cols-2">
+                            {/* Colonne Gauche (Infos) */}
                             <div className="bg-black/50 p-8 border-r border-white/5">
                                 <span className="text-studio-neon font-mono text-[10px] uppercase tracking-[0.3em]">Track_Info // {project.id}</span>
                                 <h2 className="text-4xl font-black text-white mt-4 uppercase leading-none">{project.title}</h2>
@@ -50,14 +62,29 @@ export default function ProjectModal() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="p-8 flex flex-col justify-between">
-                                <button onClick={closeModal} className="absolute top-6 right-6 text-white/20 hover:text-white"><X size={24} /></button>
+
+                            {/* Colonne Droite (Description & Action) */}
+                            <div className="p-8 flex flex-col justify-between relative">
+                                <button onClick={closeModal} className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors">
+                                    <X size={24} />
+                                </button>
+
                                 <div className="space-y-4">
                                     <p className="text-studio-neon/60 font-mono text-[10px] uppercase font-bold">Description</p>
                                     <p className="text-white/70 text-lg leading-relaxed">{project.description}</p>
                                 </div>
-                                <button className="mt-12 w-full bg-white text-black font-bold py-4 rounded-xl text-sm uppercase tracking-tighter hover:bg-studio-neon transition-colors flex items-center justify-center gap-2">
-                                    <Globe size={18} /> View Live Project
+
+                                {/* Bouton de redirection mis à jour */}
+                                <button
+                                    onClick={() => handleLiveView(project.liveUrl)}
+                                    disabled={!project.liveUrl}
+                                    className={`mt-12 w-full font-bold py-4 rounded-xl text-sm uppercase tracking-tighter transition-all flex items-center justify-center gap-2
+                                        ${project.liveUrl
+                                        ? 'bg-white text-black hover:bg-studio-neon cursor-pointer'
+                                        : 'bg-white/5 text-white/20 cursor-not-allowed'}`}
+                                >
+                                    <Globe size={18} />
+                                    {project.liveUrl ? "View Live Project" : "Project Offline"}
                                 </button>
                             </div>
                         </div>

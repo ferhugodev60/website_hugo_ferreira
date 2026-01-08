@@ -7,42 +7,52 @@ import { motion, useScroll, useTransform } from "framer-motion";
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // On suit la progression du scroll sur ce conteneur spécifique
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"],
     });
 
-    // --- TRANSFORMATIONS ---
-    // Le texte grossit et s'efface
     const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.5]);
     const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-
-    // L'image de fond dézoome et devient plus sombre
     const imgScale = useTransform(scrollYProgress, [0, 1], [1.2, 1]);
     const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [0.3, 0.1]);
-
-    // Les éléments secondaires s'envolent vers le haut
     const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
     return (
         <div ref={containerRef} className="relative h-[200vh] w-full bg-studio-black">
-            {/* Conteneur bloqué à l'écran */}
             <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
-                {/* Background avec parallaxe inverse */}
+                {/* Background avec Parallaxe */}
                 <motion.div
                     style={{ scale: imgScale, opacity: imgOpacity }}
                     className="absolute inset-0 z-0"
                 >
                     <Image
-                        src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop"
+                        src="/images/background.jpg"
                         alt="Studio Background"
                         fill
                         className="object-cover grayscale contrast-125"
                         priority
                     />
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_var(--color-studio-black)_90%)]" />
+
+                    {/* LE MASQUE "TOTAL BLEND" : 3 couches de dégradés */}
+                    <div
+                        className="absolute inset-0 z-10"
+                        style={{
+                            background: `
+                                /* 1. Fondu progressif vers le bas pour supprimer la ligne horizontale */
+                                linear-gradient(to top, var(--color-studio-black) 0%, transparent 25%),
+                                /* 2. Fondu progressif vers le haut */
+                                linear-gradient(to bottom, var(--color-studio-black) 0%, transparent 15%),
+                                /* 3. Vignettage radial pour le centre */
+                                radial-gradient(circle at center, 
+                                    transparent 0%, 
+                                    rgba(0,0,0,0.4) 50%, 
+                                    var(--color-studio-black) 100%
+                                )
+                            `
+                        }}
+                    />
                 </motion.div>
 
                 {/* Contenu Principal */}
@@ -61,17 +71,17 @@ export default function Hero() {
                     </header>
 
                     <p className="max-w-2xl mx-auto text-studio-accent/60 text-lg md:text-xl font-light leading-relaxed px-6 italic font-mono">
-                        "Merging code rigour with beatmaking instinct."
+                        2nd MIAGE master&#39;s student in Amiens (France). I want to be a UI/UX Designer.
                     </p>
                 </motion.div>
 
-                {/* Indicateur de Scroll qui disparaît vite */}
+                {/* Indicateur de Scroll */}
                 <motion.div
                     style={{ opacity }}
                     className="absolute bottom-12 flex flex-col items-center gap-4"
                 >
                     <span className="text-[10px] uppercase tracking-widest text-studio-neon/40">Initiating Session</span>
-                    <div className="w-px h-16 bg-linear-to-b from-studio-neon/50 to-transparent" />
+                    <div className="w-px h-16 bg-gradient-to-b from-studio-neon/50 to-transparent" />
                 </motion.div>
             </div>
         </div>

@@ -1,41 +1,46 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 import { useAudioStore } from "@/store/useAudioStore";
+import { useSoundEffects } from "@/hooks/useSoundEffects"; // Import du hook
 import { useState } from "react";
 
 export default function VolumeControl() {
     const { volume, setVolume, isMuted, toggleMute } = useAudioStore();
+    const { playClick } = useSoundEffects(); // Initialisation
     const [isHovered, setIsHovered] = useState(false);
+
+    const handleMuteToggle = () => {
+        playClick(); // Déclenchement du son au clic
+        toggleMute();
+    };
 
     return (
         <div
-            className="relative flex items-center gap-3 px-4"
+            className="relative flex items-center gap-2 group"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <AnimatePresence mode="wait">
-                <motion.button
-                    key={isMuted ? "muted" : "unmuted"}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    onClick={toggleMute}
-                    className="text-studio-neon hover:text-white transition-colors cursor-pointer"
-                >
-                    {isMuted || volume === 0 ? <VolumeX size={18} /> : <Volume2 size={18} />}
-                </motion.button>
-            </AnimatePresence>
+            <button
+                onClick={handleMuteToggle}
+                className="text-white/40 hover:text-studio-neon transition-colors cursor-pointer p-1"
+            >
+                {isMuted || volume === 0 ? (
+                    <VolumeX size={16} className="text-red-500/60" />
+                ) : (
+                    <Volume2 size={16} />
+                )}
+            </button>
 
             <motion.div
-                className="flex items-center"
+                className="overflow-hidden flex items-center"
                 initial={{ width: 0, opacity: 0 }}
                 animate={{
                     width: isHovered ? 80 : 0,
                     opacity: isHovered ? 1 : 0
                 }}
-                transition={{ duration: 0.3, ease: "circOut" }}
+                transition={{ duration: 0.2 }}
             >
                 <input
                     type="range"
@@ -44,16 +49,15 @@ export default function VolumeControl() {
                     step="0.01"
                     value={isMuted ? 0 : volume}
                     onChange={(e) => setVolume(parseFloat(e.target.value))}
-                    className="w-full h-1 bg-white/10 appearance-none rounded-full cursor-pointer accent-studio-neon transition-all"
+                    className="w-20 h-1 bg-white/10 appearance-none rounded-full cursor-pointer accent-studio-neon"
                     style={{
-                        backgroundImage: `linear-gradient(to right, #95FF00 ${volume * 100}%, transparent ${volume * 100}%)`
+                        backgroundImage: `linear-gradient(to right, #95FF00 ${ (isMuted ? 0 : volume) * 100}%, transparent 0%)`
                     }}
                 />
             </motion.div>
 
-            {/* Affichage du pourcentage en petit */}
-            <span className="font-mono text-[10px] text-white/30 w-8">
-                {isMuted ? "MUTE" : `${Math.round(volume * 100)}%`}
+            <span className="font-mono text-[9px] text-white/20 w-7">
+                {isMuted ? "OFF" : `${Math.round(volume * 100)}%`}
             </span>
         </div>
     );

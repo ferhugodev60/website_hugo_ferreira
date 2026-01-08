@@ -6,4 +6,5 @@ export interface ProjectTrack {
     bpm: number;
     previewUrl: string;
     description: string;
+    liveUrl?: string;
 }

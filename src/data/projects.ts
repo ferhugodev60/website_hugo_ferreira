@@ -3,29 +3,12 @@ import { ProjectTrack } from "@/types";
 export const projects: ProjectTrack[] = [
     {
         id: "01",
-        title: "Project Alpha",
+        title: "Project Greenlight",
         category: "Web",
-        stack: ["Next.js", "Tailwind", "Framer"],
+        stack: ["React", "Tailwind", "Node", "Express"],
         bpm: 128,
-        previewUrl: "/audio/alpha-preview.mp3",
-        description: "Une plateforme immersive de gestion de samples."
-    },
-    {
-        id: "02",
-        title: "Sonic Design",
-        category: "Audio",
-        stack: ["Ableton", "MaxMSP", "React"],
-        bpm: 95,
         previewUrl: "/audio/thank-god.mp3",
-        description: "Exploration de la synthèse sonore granulaire via le web."
+        description: "Mise en place du site d'un concept-store de sneakers et streetwear basé à Compiègne.",
+        liveUrl: "https://www.greenlightdistrict.fr/"
     },
-    {
-        id: "03",
-        title: "Visual Mix",
-        category: "Design",
-        stack: ["Figma", "Three.js", "GLSL"],
-        bpm: 140,
-        previewUrl: "/audio/visual-preview.mp3",
-        description: "Interface de mixage 3D pour performances live."
-    }
 ];
