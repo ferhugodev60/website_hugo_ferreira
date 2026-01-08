@@ -3,26 +3,44 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import SocialLinks from "@/components/layout/SocialLinks"; // Import du composant
 
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
 
+    // On suit la progression du scroll sur ce conteneur spécifique
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"],
     });
 
+    // --- TRANSFORMATIONS LIÉES AU SCROLL ---
+    // Le contenu (texte + icônes) grossit et s'efface
     const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.5]);
     const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+
+    // L'image de fond dézoome et devient plus sombre
     const imgScale = useTransform(scrollYProgress, [0, 1], [1.2, 1]);
     const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [0.3, 0.1]);
+
+    // Les éléments secondaires s'envolent vers le haut
     const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
     return (
         <div ref={containerRef} className="relative h-[200vh] w-full bg-studio-black">
+            {/* Conteneur bloqué à l'écran pendant le scroll des 200vh */}
             <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
-                {/* Background avec Parallaxe */}
+                {/* 1. SECTION SOCIALE (Haut à droite) */}
+                {/* On enveloppe SocialLinks dans un motion.div pour qu'il disparaisse au scroll */}
+                <motion.div
+                    style={{ opacity }}
+                    className="absolute top-0 right-0 z-50"
+                >
+                    <SocialLinks />
+                </motion.div>
+
+                {/* 2. BACKGROUND AVEC PARALLAXE ET MASQUE */}
                 <motion.div
                     style={{ scale: imgScale, opacity: imgOpacity }}
                     className="absolute inset-0 z-0"
@@ -35,16 +53,13 @@ export default function Hero() {
                         priority
                     />
 
-                    {/* LE MASQUE "TOTAL BLEND" : 3 couches de dégradés */}
+                    {/* Masque de fusion multi-couches pour supprimer les bords de l'image */}
                     <div
                         className="absolute inset-0 z-10"
                         style={{
                             background: `
-                                /* 1. Fondu progressif vers le bas pour supprimer la ligne horizontale */
                                 linear-gradient(to top, var(--color-studio-black) 0%, transparent 25%),
-                                /* 2. Fondu progressif vers le haut */
                                 linear-gradient(to bottom, var(--color-studio-black) 0%, transparent 15%),
-                                /* 3. Vignettage radial pour le centre */
                                 radial-gradient(circle at center, 
                                     transparent 0%, 
                                     rgba(0,0,0,0.4) 50%, 
@@ -55,7 +70,7 @@ export default function Hero() {
                     />
                 </motion.div>
 
-                {/* Contenu Principal */}
+                {/* 3. CONTENU TEXTUEL (NOM + TITRE) */}
                 <motion.div
                     style={{ scale, opacity, y }}
                     className="relative z-10 text-center space-y-8"
@@ -75,7 +90,7 @@ export default function Hero() {
                     </p>
                 </motion.div>
 
-                {/* Indicateur de Scroll */}
+                {/* 4. INDICATEUR DE SCROLL (Bas de page) */}
                 <motion.div
                     style={{ opacity }}
                     className="absolute bottom-12 flex flex-col items-center gap-4"
