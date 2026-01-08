@@ -1,0 +1,48 @@
+@import "tailwindcss" source("../");
+
+/* Configuration des variables de ton univers Studio v4 */
+@theme {
+    --color-studio-black: #0A0A0A;
+    --color-studio-dark: #121212;
+    --color-studio-accent: #E5E5E5;
+    --color-studio-neon: #39FF14;
+    --animate-scanline: scanline 8s linear infinite;
+    /* --background-image-grain: #0000001A; */
+}
+
+@keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Couche de texture globale */
+.studio-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: linear-gradient(
+            rgba(18, 16, 16, 0) 50%,
+            rgba(0, 0, 0, 0.1) 50%
+    ),
+    linear-gradient(
+            90deg,
+            rgba(255, 0, 0, 0.03),
+            rgba(0, 255, 0, 0.01),
+            rgba(0, 0, 255, 0.03)
+    );
+    background-size: 100% 4px, 3px 100%;
+    opacity: 0.15;
+}
+
+/* Styles de base */
+:root {
+    background-color: var(--color-studio-black);
+    color: var(--color-studio-accent);
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
