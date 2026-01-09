@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import SocialLinks from "@/components/layout/SocialLinks";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -16,12 +17,11 @@ export default function Hero() {
         offset: ["start start", "end end"],
     });
 
-    // --- TRANSFORMATIONS ---
-    const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.5]);
+    const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.2]);
     const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-    const imgScale = useTransform(scrollYProgress, [0, 1], [1.2, 1]);
+    const imgScale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
     const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [0.3, 0.1]);
-    const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
+    const y = useTransform(scrollYProgress, [0, 1], [0, -150]);
 
     const scrollToProjects = () => {
         playClick();
@@ -35,88 +35,69 @@ export default function Hero() {
         <div ref={containerRef} className="relative h-[200vh] w-full bg-studio-black">
             <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
-                {/* 1. SOCIAL LINKS */}
+                {/* Liens Sociaux fixés en haut à droite */}
                 <motion.div style={{ opacity }} className="absolute top-0 right-0 z-50">
                     <SocialLinks />
                 </motion.div>
 
-                {/* 2. BACKGROUND & MASKS - GESTION RESPONSIVE */}
-                <motion.div
-                    style={{ scale: imgScale, opacity: imgOpacity }}
-                    className="absolute inset-0 z-0"
-                >
-                    {/* Image DESKTOP : visible à partir de 'md' (768px+) */}
+                {/* Arrière-plan Responsive */}
+                <motion.div style={{ scale: imgScale, opacity: imgOpacity }} className="absolute inset-0 z-0">
                     <Image
                         src="/images/background.webp"
-                        alt="Studio Background Desktop"
+                        alt="Studio Desktop"
                         fill
                         className="object-cover grayscale contrast-125 hidden md:block"
                         priority
                     />
-
-                    {/* Image MOBILE : visible uniquement sous 'md' */}
                     <Image
                         src="/images/background-mobile.webp"
-                        alt="Studio Background Mobile"
+                        alt="Studio Mobile"
                         fill
                         className="object-cover grayscale contrast-125 block md:hidden"
                         priority
                     />
-
-                    {/* Calques de dégradés pour la lisibilité */}
-                    <div
-                        className="absolute inset-0 z-10"
-                        style={{
-                            background: `
-                                linear-gradient(to top, var(--color-studio-black) 0%, transparent 25%),
-                                linear-gradient(to bottom, var(--color-studio-black) 0%, transparent 15%),
-                                radial-gradient(circle at center, 
-                                    transparent 0%, 
-                                    rgba(0,0,0,0.4) 50%, 
-                                    var(--color-studio-black) 100%
-                                )
-                            `
-                        }}
-                    />
+                    <div className="absolute inset-0 z-10" style={{ background: `linear-gradient(to top, var(--color-studio-black) 0%, transparent 25%), radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.6) 100%)` }} />
                 </motion.div>
 
-                {/* 3. MAIN CONTENT (TEXT + CTA) */}
+                {/* Contenu Principal : Aligné à gauche sur Desktop, Centré sur Mobile */}
                 <motion.div
                     style={{ scale, opacity, y }}
-                    className="relative z-10 text-center space-y-10"
+                    className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col items-center md:items-start text-center md:text-left"
                 >
-                    <header className="space-y-4">
-                        <span className="text-studio-neon text-[10px] uppercase tracking-[0.5em] font-bold block">
-                            Interface Design • Musical composition
-                        </span>
-                        <h1 className="text-5xl md:text-9xl font-black tracking-tight text-white leading-none">
-                            HUGO <span className="text-studio-accent/20">FERREIRA</span>
-                        </h1>
+                    <header className="w-full flex flex-col items-center md:items-start">
+        <span className="text-studio-neon text-[10px] uppercase tracking-[0.5em] font-bold block mb-4">
+            Interface Design • Musical composition
+        </span>
+
+                        <div className="flex flex-col items-center md:items-start w-full">
+                            <h1 className="text-6xl md:text-9xl font-black text-white leading-none uppercase tracking-[0.02em] md:tracking-tighter">
+                                HUGO
+                            </h1>
+                            <div className="h-[6rem] md:h-[9rem] w-full max-w-[400px] md:max-w-none mx-auto md:mx-0 -mt-2 md:-mt-6 md:-ml-2 overflow-visible">
+                                <TextHoverEffect text="FERREIRA" />
+                            </div>
+                        </div>
                     </header>
 
-                    <p className="max-w-2xl mx-auto text-studio-accent/60 text-base md:text-xl font-light leading-relaxed px-6 italic font-mono">
+                    <p className="max-w-2xl text-studio-accent/60 text-sm md:text-xl font-light leading-relaxed italic font-mono mt-2 md:mt-2 px-4 md:px-0">
                         Passionné par le Web Design et la Musique Assistée par Ordinateur (MAO)
                     </p>
 
-                    <motion.div className="flex justify-center pt-4">
+                    <motion.div className="flex justify-center md:justify-start pt-8 md:pt-10 w-full">
                         <button
                             onClick={scrollToProjects}
-                            className="group relative flex items-center gap-3 px-8 py-4 bg-transparent border border-white/10 rounded-full overflow-hidden transition-all hover:border-studio-neon/50"
+                            className="group relative flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-transparent border border-white/10 rounded-full overflow-hidden transition-all hover:border-studio-neon/50"
                         >
                             <div className="absolute inset-0 bg-studio-neon translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-
-                            <span className="relative z-10 text-[11px] font-mono uppercase tracking-[0.3em] text-white group-hover:text-black transition-colors duration-300">
-                                Explore_Archive
-                            </span>
-                            <ChevronDown
-                                size={16}
-                                className="relative z-10 text-studio-neon group-hover:text-black transition-colors duration-300 animate-bounce"
-                            />
+                            <span className="relative z-10 text-[10px] md:text-[11px] font-mono uppercase tracking-[0.3em] text-white group-hover:text-black transition-colors">
+                Explore_Archive
+            </span>
+                            <ChevronDown size={16} className="relative z-10 text-studio-neon group-hover:text-black transition-colors animate-bounce" />
                         </button>
                     </motion.div>
                 </motion.div>
 
-                {/* 4. SCROLL INDICATOR */}
+                {/* Indicateur de Scroll */}
                 <motion.div style={{ opacity }} className="absolute bottom-12 flex flex-col items-center gap-4">
                     <span className="text-[10px] uppercase tracking-widest text-studio-neon/40">Initiating Session</span>
                     <div className="w-px h-16 bg-gradient-to-b from-studio-neon/50 to-transparent" />
