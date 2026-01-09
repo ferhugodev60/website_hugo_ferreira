@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ChevronDown } from "lucide-react"; // Import d'une icône pour le CTA
+import { ChevronDown } from "lucide-react";
 import SocialLinks from "@/components/layout/SocialLinks";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 
@@ -23,9 +23,8 @@ export default function Hero() {
     const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [0.3, 0.1]);
     const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
-    // Fonction pour scroller vers les projets
     const scrollToProjects = () => {
-        playClick(); // Retour sonore immédiat
+        playClick();
         const projectsSection = document.getElementById("projects-archive");
         if (projectsSection) {
             projectsSection.scrollIntoView({ behavior: "smooth" });
@@ -41,8 +40,11 @@ export default function Hero() {
                     <SocialLinks />
                 </motion.div>
 
-                {/* 2. BACKGROUND & MASKS */}
-                <motion.div style={{ scale: imgScale, opacity: imgOpacity }} className="absolute inset-0 z-0">
+                {/* 2. BACKGROUND & MASKS - Masqué sur mobile, affiché à partir de md */}
+                <motion.div
+                    style={{ scale: imgScale, opacity: imgOpacity }}
+                    className="absolute inset-0 z-0 hidden md:block"
+                >
                     <Image
                         src="/images/background.webp"
                         alt="Studio Background"
@@ -75,23 +77,20 @@ export default function Hero() {
                         <span className="text-studio-neon text-[10px] uppercase tracking-[0.5em] font-bold block">
                             Interface Design • Musical composition
                         </span>
-                        <h1 className="text-7xl md:text-9xl font-black tracking-tight text-white leading-none">
+                        <h1 className="text-5xl md:text-9xl font-black tracking-tight text-white leading-none">
                             HUGO <span className="text-studio-accent/20">FERREIRA</span>
                         </h1>
                     </header>
 
-                    {/* PARAGRAPHE MIS À JOUR */}
-                    <p className="max-w-2xl mx-auto text-studio-accent/60 text-lg md:text-xl font-light leading-relaxed px-6 italic font-mono">
-                        Passionné par le Webdesign et la Musique Assitée par Ordinateur (MAO)
+                    <p className="max-w-2xl mx-auto text-studio-accent/60 text-base md:text-xl font-light leading-relaxed px-6 italic font-mono">
+                        Passionné par le Webdesign et la Musique Assistée par Ordinateur (MAO)
                     </p>
 
-                    {/* CALL TO ACTION : EXPLORE ARCHIVE */}
                     <motion.div className="flex justify-center pt-4">
                         <button
                             onClick={scrollToProjects}
                             className="group relative flex items-center gap-3 px-8 py-4 bg-transparent border border-white/10 rounded-full overflow-hidden transition-all hover:border-studio-neon/50"
                         >
-                            {/* Effet de fond au survol */}
                             <div className="absolute inset-0 bg-studio-neon translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
 
                             <span className="relative z-10 text-[11px] font-mono uppercase tracking-[0.3em] text-white group-hover:text-black transition-colors duration-300">

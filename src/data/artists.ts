@@ -7,6 +7,13 @@ export const favoriteArtists = [
         src: "https://www.rollingstone.com/wp-content/uploads/2023/07/travis-scott-album-review-2.jpg?w=1581&h=1054&crop=1",
     },
     {
+        name: "Playboi Carti",
+        designation: "Aesthetic Innovator / Visual Visionary",
+        quote:
+            "L'icône de l'esthétique radicale. Son univers minimaliste et mystérieux guide ma conception d'interfaces audacieuses et résolument avant-gardistes.",
+        src: "https://cdn-images.dzcdn.net/images/artist/b90097972a60d9d8598a79a786be1a3a/1900x1900-000000-81-0-0.jpg",
+    },
+    {
         name: "Metro Boomin",
         designation: "Record Producer",
         quote:
@@ -17,7 +24,7 @@ export const favoriteArtists = [
         name: "Future",
         designation: "Trap Pioneer / Vocal Architect",
         quote:
-            "L'architecte de la Trap moderne. Son utilisation de l'Auto-Tune comme une extension organique de la voix crée des atmosphères nocturnes et saturées qui inspirent ma recherche de fluidité visuelle et de contrastes profonds.",
+            "L'architecte de la Trap moderne. Son usage de l'Auto-Tune crée des atmosphères nocturnes qui inspirent ma recherche de fluidité et de contrastes profonds.",
         src: "https://static.gentsu.fr/wp-content/uploads/2022/11/future.jpeg",
     },
     {
