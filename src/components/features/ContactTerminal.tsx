@@ -1,10 +1,11 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
-import { Cpu, Send, Terminal } from "lucide-react";
+import { Cpu, Send, Terminal, CheckCircle2, AlertCircle } from "lucide-react";
+import { sendEmail } from "@/app/actions/sendEmail";
 
 const ScrambleText = ({ text }: { text: string }) => {
     const [display, setDisplay] = useState("");
@@ -23,9 +24,10 @@ const ScrambleText = ({ text }: { text: string }) => {
 };
 
 export default function ContactTerminal() {
-    const { register, handleSubmit, formState: { isSubmitting } } = useForm();
+    const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm();
     const [mounted, setMounted] = useState(false);
     const [nodeId, setNodeId] = useState("");
+    const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
     const { playTransmit } = useSoundEffects();
 
     useEffect(() => {
@@ -34,30 +36,40 @@ export default function ContactTerminal() {
     }, []);
 
     const onSubmit = async (data: any) => {
-        playTransmit();
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        console.log("Transmission initiée...", data);
+        try {
+            setStatus("idle");
+            playTransmit();
+
+            // Appel de l'action serveur Resend
+            const result = await sendEmail(data);
+
+            if (result.success) {
+                setStatus("success");
+                reset(); // Vide le formulaire après succès
+            } else {
+                setStatus("error");
+            }
+        } catch (error) {
+            setStatus("error");
+        }
     };
 
     if (!mounted) return null;
 
     return (
         <section className="w-full max-w-6xl mx-auto px-6 py-32 relative">
-            {/* Effet de lueur en arrière-plan */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-studio-neon/5 blur-[120px] pointer-events-none" />
 
-            {/* HEADER DE SECTION - Aligné sur le Toolkit */}
+            {/* HEADER DE SECTION RESPONSIVE */}
             <div className="flex items-center justify-between mb-12 border-b border-white/10 pb-4">
                 <h2 className="text-xl font-bold tracking-tighter uppercase text-studio-neon">
                     Contact_Terminal <span className="text-white/30 ml-2">// Connection</span>
                 </h2>
-                {/* Masqué sur mobile pour éviter la surcharge visuelle */}
                 <span className="hidden md:block text-[10px] text-white/40 uppercase tracking-widest font-mono">
                     System_Status: Awaiting Signal
                 </span>
             </div>
 
-            {/* BOX DU TERMINAL */}
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -116,19 +128,45 @@ export default function ContactTerminal() {
                         />
                     </div>
 
-                    <motion.button
-                        type="submit"
-                        disabled={isSubmitting}
-                        whileHover={!isSubmitting ? { scale: 1.005 } : {}}
-                        whileTap={!isSubmitting ? { scale: 0.99 } : {}}
-                        className={`mt-12 w-full font-bold py-4 rounded-xl text-sm uppercase tracking-tighter transition-all flex items-center justify-center gap-2
-                            ${!isSubmitting
-                            ? 'bg-white text-black hover:bg-studio-neon cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.05)]'
-                            : 'bg-white/5 text-white/20 cursor-not-allowed'}`}
-                    >
-                        <Send size={18} />
-                        {isSubmitting ? "Transmitting..." : "Transmit Data Request"}
-                    </motion.button>
+                    <div className="relative">
+                        <motion.button
+                            type="submit"
+                            disabled={isSubmitting}
+                            whileHover={!isSubmitting ? { scale: 1.005 } : {}}
+                            whileTap={!isSubmitting ? { scale: 0.99 } : {}}
+                            className={`w-full font-bold py-4 rounded-xl text-sm uppercase tracking-tighter transition-all flex items-center justify-center gap-2
+                                ${!isSubmitting
+                                ? 'bg-white text-black hover:bg-studio-neon cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.05)]'
+                                : 'bg-white/5 text-white/20 cursor-not-allowed'}`}
+                        >
+                            <Send size={18} />
+                            {isSubmitting ? "Transmitting..." : "Transmit Data Request"}
+                        </motion.button>
+
+                        {/* Feedback Visuel après envoi */}
+                        <AnimatePresence>
+                            {status !== "idle" && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    className={`absolute -bottom-8 left-0 right-0 text-center text-[10px] font-mono uppercase tracking-widest ${
+                                        status === "success" ? "text-studio-neon" : "text-red-500"
+                                    }`}
+                                >
+                                    {status === "success" ? (
+                                        <span className="flex items-center justify-center gap-2">
+                                            <CheckCircle2 size={12} /> Signal_Sent_Successfully
+                                        </span>
+                                    ) : (
+                                        <span className="flex items-center justify-center gap-2">
+                                            <AlertCircle size={12} /> Transmission_Failed
+                                        </span>
+                                    )}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
                 </form>
 
                 {/* Footer du Terminal */}
