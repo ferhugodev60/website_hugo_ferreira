@@ -40,18 +40,30 @@ export default function Hero() {
                     <SocialLinks />
                 </motion.div>
 
-                {/* 2. BACKGROUND & MASKS - Masqué sur mobile, affiché à partir de md */}
+                {/* 2. BACKGROUND & MASKS - GESTION RESPONSIVE */}
                 <motion.div
                     style={{ scale: imgScale, opacity: imgOpacity }}
-                    className="absolute inset-0 z-0 hidden md:block"
+                    className="absolute inset-0 z-0"
                 >
+                    {/* Image DESKTOP : visible à partir de 'md' (768px+) */}
                     <Image
                         src="/images/background.webp"
-                        alt="Studio Background"
+                        alt="Studio Background Desktop"
                         fill
-                        className="object-cover grayscale contrast-125"
+                        className="object-cover grayscale contrast-125 hidden md:block"
                         priority
                     />
+
+                    {/* Image MOBILE : visible uniquement sous 'md' */}
+                    <Image
+                        src="/images/background-mobile.webp"
+                        alt="Studio Background Mobile"
+                        fill
+                        className="object-cover grayscale contrast-125 block md:hidden"
+                        priority
+                    />
+
+                    {/* Calques de dégradés pour la lisibilité */}
                     <div
                         className="absolute inset-0 z-10"
                         style={{
@@ -83,7 +95,7 @@ export default function Hero() {
                     </header>
 
                     <p className="max-w-2xl mx-auto text-studio-accent/60 text-base md:text-xl font-light leading-relaxed px-6 italic font-mono">
-                        Passionné par le Webdesign et la Musique Assistée par Ordinateur (MAO)
+                        Passionné par le Web Design et la Musique Assistée par Ordinateur (MAO)
                     </p>
 
                     <motion.div className="flex justify-center pt-4">

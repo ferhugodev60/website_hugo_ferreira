@@ -6,6 +6,7 @@ import ProjectModal from "@/components/features/ProjectModal";
 import Manifesto from "@/components/features/Manifesto";
 import Hero from "@/components/features/Hero";
 import {ArtistInfluences} from "@/components/features/ArtistInfluences";
+import Toolkit from "@/components/features/Toolkit";
 
 export default function Home() {
     return (
@@ -25,6 +26,8 @@ export default function Home() {
             <Manifesto />
 
             <ArtistInfluences />
+
+            <Toolkit />
 
             {/* Section Contact avec effet de dégradé néon */}
             <section className="relative z-10 bg-[linear-gradient(to_bottom,transparent,rgba(0,255,102,0.02))]">

@@ -11,12 +11,9 @@ export default function ProjectModal() {
     const { playClick } = useSoundEffects();
     const project = projects.find(p => p.id === selectedProjectId);
 
-    // Fonction de redirection avec son
     const handleLiveView = (url?: string) => {
         if (!url) return;
         playClick();
-
-        // On ouvre le lien dans un nouvel onglet
         window.open(url, "_blank", "noopener,noreferrer");
     };
 
@@ -40,11 +37,23 @@ export default function ProjectModal() {
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
                         className="relative w-full max-w-4xl bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
                     >
+                        {/* 1. BOUTON CLOSE DÉPLACÉ ICI : Enfant direct du container pour être toujours en haut à droite */}
+                        <button
+                            onClick={closeModal}
+                            className="absolute top-6 right-6 z-50 text-white/20 hover:text-white transition-colors p-2"
+                        >
+                            <X size={24} />
+                        </button>
+
                         <div className="grid grid-cols-1 md:grid-cols-2">
                             {/* Colonne Gauche (Infos) */}
-                            <div className="bg-black/50 p-8 border-r border-white/5">
-                                <span className="text-studio-neon font-mono text-[10px] uppercase tracking-[0.3em]">Track_Info // {project.id}</span>
-                                <h2 className="text-4xl font-black text-white mt-4 uppercase leading-none">{project.title}</h2>
+                            <div className="bg-black/50 p-8 border-b md:border-b-0 md:border-r border-white/5">
+                                <span className="text-studio-neon font-mono text-[10px] uppercase tracking-[0.3em]">
+                                    Track_Info // {project.id}
+                                </span>
+                                <h2 className="text-4xl font-black text-white mt-4 uppercase leading-none">
+                                    {project.title}
+                                </h2>
                                 <div className="mt-10 space-y-6">
                                     <div className="flex items-center gap-4">
                                         <div className="p-2 bg-white/5 rounded-lg text-studio-neon"><Music size={20} /></div>
@@ -64,23 +73,19 @@ export default function ProjectModal() {
                             </div>
 
                             {/* Colonne Droite (Description & Action) */}
-                            <div className="p-8 flex flex-col justify-between relative">
-                                <button onClick={closeModal} className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors">
-                                    <X size={24} />
-                                </button>
-
+                            <div className="p-8 flex flex-col justify-between">
+                                {/* Le bouton a été supprimé d'ici car il est désormais au-dessus du grid */}
                                 <div className="space-y-4">
                                     <p className="text-studio-neon/60 font-mono text-[10px] uppercase font-bold">Description</p>
                                     <p className="text-white/70 text-lg leading-relaxed">{project.description}</p>
                                 </div>
 
-                                {/* Bouton de redirection mis à jour */}
                                 <button
                                     onClick={() => handleLiveView(project.liveUrl)}
                                     disabled={!project.liveUrl}
                                     className={`mt-12 w-full font-bold py-4 rounded-xl text-sm uppercase tracking-tighter transition-all flex items-center justify-center gap-2
                                         ${project.liveUrl
-                                        ? 'bg-white text-black hover:bg-studio-neon cursor-pointer'
+                                        ? 'bg-white text-black hover:bg-studio-neon cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.05)]'
                                         : 'bg-white/5 text-white/20 cursor-not-allowed'}`}
                                 >
                                     <Globe size={18} />
