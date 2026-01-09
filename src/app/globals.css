@@ -1,21 +1,66 @@
-@import "tailwindcss" source("../");
+@import "tailwindcss";
 
-/* Configuration des variables de ton univers Studio v4 */
+/* Plugin d'animation indispensable pour Aceternity UI */
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+/* -------------------------------------------------------------------------- */
+/* CONFIGURATION DU THÈME (TAILWIND v4)                                       */
+/* -------------------------------------------------------------------------- */
 @theme {
+    /* Identité visuelle Studio */
     --color-studio-black: #0A0A0A;
     --color-studio-dark: #121212;
     --color-studio-accent: #E5E5E5;
     --color-studio-neon: #39FF14;
+
+    /* Animations personnalisées */
     --animate-scanline: scanline 8s linear infinite;
-    /* --background-image-grain: #0000001A; */
+
+    @keyframes scanline {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(100%); }
+    }
+
+    /* Mapping des variables système shadcn vers ton thème */
+    --radius: 0.625rem;
+    --color-background: var(--color-studio-black);
+    --color-foreground: var(--color-studio-accent);
+
+    --color-border: color-mix(in srgb, var(--color-studio-accent) 10%, transparent);
+    --color-input: color-mix(in srgb, var(--color-studio-accent) 15%, transparent);
+    --color-ring: var(--color-studio-neon);
+
+    --color-primary: var(--color-studio-neon);
+    --color-primary-foreground: var(--color-studio-black);
+
+    --color-secondary: var(--color-studio-dark);
+    --color-secondary-foreground: var(--color-studio-accent);
 }
 
-@keyframes scanline {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
+/* -------------------------------------------------------------------------- */
+/* VARIABLES CSS ET THÈME SOMBRE                                              */
+/* -------------------------------------------------------------------------- */
+:root {
+    --background: oklch(0.141 0.005 285.823);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.141 0.005 285.823);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.141 0.005 285.823);
+    --popover-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.274 0.006 286.033);
+    --muted-foreground: oklch(0.705 0.015 286.067);
+    --accent: oklch(0.274 0.006 286.033);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
 }
 
-/* Couche de texture globale */
+/* -------------------------------------------------------------------------- */
+/* UTILS ET EFFETS VISUELS                                                    */
+/* -------------------------------------------------------------------------- */
+
+/* Couche de texture globale (Effet CRT/Studio) */
 .studio-overlay {
     pointer-events: none;
     position: fixed;
@@ -35,14 +80,18 @@
     opacity: 0.15;
 }
 
-/* Styles de base */
-:root {
-    background-color: var(--color-studio-black);
-    color: var(--color-studio-accent);
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+/* -------------------------------------------------------------------------- */
+/* BASE STYLES                                                                */
+/* -------------------------------------------------------------------------- */
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+        margin: 0;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        background-color: var(--color-studio-black);
+    }
 }

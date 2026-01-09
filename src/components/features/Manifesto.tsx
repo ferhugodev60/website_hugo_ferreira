@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 export default function Manifesto() {
-    const text = "FUSIONNER LA RIGUEUR DU CODE ET L'INSTINCT DU BEATMAKING POUR CRÉER DES INTERFACES QUI RÉSONNENT. SYSTÈME PRÊT POUR NOUVELLE COLLABORATION.";
+    const text = "L'INTERFACE DEVIENT VOYAGE. UNE EXPLORATION SENSORIELLE OÙ LE DESIGN ET LA MUSIQUE OUVRENT LES PORTES D'UN AUTRE UNIVERS.";
 
     return (
         <section className="max-w-6xl mx-auto px-6 py-20 relative">

@@ -7,6 +7,11 @@ const nextConfig = {
                 hostname: 'images.unsplash.com',
                 pathname: '/**', // Autorise tous les chemins pour ce domaine
             },
+            {
+                protocol: 'https',
+                hostname: 'upload.wikimedia.org',
+                pathname: '/**',
+            },
         ],
     },
 };

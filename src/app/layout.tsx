@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import AudioEngine from "@/components/layout/AudioEngine";
-import Footer from "@/components/layout/Footer"; // Import du moteur audio
+import Footer from "@/components/layout/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "HUGO FERREIRA | Creative Technologist",
         description: "Exploration immersive de projets numériques et sonores.",
-        url: "https://ton-portfolio.com", // À changer au déploiement
+        url: "https://hugo-ferreira.fr",
         siteName: "Hugo Ferreira Portfolio",
         images: [
             {

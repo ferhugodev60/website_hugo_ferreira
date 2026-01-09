@@ -3,57 +3,53 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import SocialLinks from "@/components/layout/SocialLinks"; // Import du composant
+import { ChevronDown } from "lucide-react"; // Import d'une icône pour le CTA
+import SocialLinks from "@/components/layout/SocialLinks";
+import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
+    const { playClick } = useSoundEffects();
 
-    // On suit la progression du scroll sur ce conteneur spécifique
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"],
     });
 
-    // --- TRANSFORMATIONS LIÉES AU SCROLL ---
-    // Le contenu (texte + icônes) grossit et s'efface
+    // --- TRANSFORMATIONS ---
     const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.5]);
     const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-
-    // L'image de fond dézoome et devient plus sombre
     const imgScale = useTransform(scrollYProgress, [0, 1], [1.2, 1]);
     const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [0.3, 0.1]);
-
-    // Les éléments secondaires s'envolent vers le haut
     const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
+
+    // Fonction pour scroller vers les projets
+    const scrollToProjects = () => {
+        playClick(); // Retour sonore immédiat
+        const projectsSection = document.getElementById("projects-archive");
+        if (projectsSection) {
+            projectsSection.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
     return (
         <div ref={containerRef} className="relative h-[200vh] w-full bg-studio-black">
-            {/* Conteneur bloqué à l'écran pendant le scroll des 200vh */}
             <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
-                {/* 1. SECTION SOCIALE (Haut à droite) */}
-                {/* On enveloppe SocialLinks dans un motion.div pour qu'il disparaisse au scroll */}
-                <motion.div
-                    style={{ opacity }}
-                    className="absolute top-0 right-0 z-50"
-                >
+                {/* 1. SOCIAL LINKS */}
+                <motion.div style={{ opacity }} className="absolute top-0 right-0 z-50">
                     <SocialLinks />
                 </motion.div>
 
-                {/* 2. BACKGROUND AVEC PARALLAXE ET MASQUE */}
-                <motion.div
-                    style={{ scale: imgScale, opacity: imgOpacity }}
-                    className="absolute inset-0 z-0"
-                >
+                {/* 2. BACKGROUND & MASKS */}
+                <motion.div style={{ scale: imgScale, opacity: imgOpacity }} className="absolute inset-0 z-0">
                     <Image
-                        src="/images/background.jpg"
+                        src="/images/background.webp"
                         alt="Studio Background"
                         fill
                         className="object-cover grayscale contrast-125"
                         priority
                     />
-
-                    {/* Masque de fusion multi-couches pour supprimer les bords de l'image */}
                     <div
                         className="absolute inset-0 z-10"
                         style={{
@@ -70,31 +66,47 @@ export default function Hero() {
                     />
                 </motion.div>
 
-                {/* 3. CONTENU TEXTUEL (NOM + TITRE) */}
+                {/* 3. MAIN CONTENT (TEXT + CTA) */}
                 <motion.div
                     style={{ scale, opacity, y }}
-                    className="relative z-10 text-center space-y-8"
+                    className="relative z-10 text-center space-y-10"
                 >
                     <header className="space-y-4">
                         <span className="text-studio-neon text-[10px] uppercase tracking-[0.5em] font-bold block">
-                            Digital Architecture • Sound Composition
+                            Interface Design • Musical composition
                         </span>
-
                         <h1 className="text-7xl md:text-9xl font-black tracking-tight text-white leading-none">
                             HUGO <span className="text-studio-accent/20">FERREIRA</span>
                         </h1>
                     </header>
 
+                    {/* PARAGRAPHE MIS À JOUR */}
                     <p className="max-w-2xl mx-auto text-studio-accent/60 text-lg md:text-xl font-light leading-relaxed px-6 italic font-mono">
-                        2nd MIAGE master&#39;s student in Amiens (France). I want to be a UI/UX Designer.
+                        Passionné par le Webdesign et la Musique Assitée par Ordinateur (MAO)
                     </p>
+
+                    {/* CALL TO ACTION : EXPLORE ARCHIVE */}
+                    <motion.div className="flex justify-center pt-4">
+                        <button
+                            onClick={scrollToProjects}
+                            className="group relative flex items-center gap-3 px-8 py-4 bg-transparent border border-white/10 rounded-full overflow-hidden transition-all hover:border-studio-neon/50"
+                        >
+                            {/* Effet de fond au survol */}
+                            <div className="absolute inset-0 bg-studio-neon translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+
+                            <span className="relative z-10 text-[11px] font-mono uppercase tracking-[0.3em] text-white group-hover:text-black transition-colors duration-300">
+                                Explore_Archive
+                            </span>
+                            <ChevronDown
+                                size={16}
+                                className="relative z-10 text-studio-neon group-hover:text-black transition-colors duration-300 animate-bounce"
+                            />
+                        </button>
+                    </motion.div>
                 </motion.div>
 
-                {/* 4. INDICATEUR DE SCROLL (Bas de page) */}
-                <motion.div
-                    style={{ opacity }}
-                    className="absolute bottom-12 flex flex-col items-center gap-4"
-                >
+                {/* 4. SCROLL INDICATOR */}
+                <motion.div style={{ opacity }} className="absolute bottom-12 flex flex-col items-center gap-4">
                     <span className="text-[10px] uppercase tracking-widest text-studio-neon/40">Initiating Session</span>
                     <div className="w-px h-16 bg-gradient-to-b from-studio-neon/50 to-transparent" />
                 </motion.div>
