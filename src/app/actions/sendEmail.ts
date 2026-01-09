@@ -10,7 +10,7 @@ export async function sendEmail(formData: { name: string; email: string; message
 
         // 1. Destructuration de la réponse (on récupère data ET error)
         const { data, error } = await resend.emails.send({
-            from: `Studio Contact <contact@hugo-ferreira.fr>`,
+            from: `Hugo FERREIRA Website Contact <contact@hugo-ferreira.fr>`,
             to: ["ferreira.hugo602@gmail.com"],
             subject: `Nouveau Signal : ${name}`,
             replyTo: email,
@@ -18,8 +18,8 @@ export async function sendEmail(formData: { name: string; email: string; message
             html: `
         <div style="font-family: monospace; background: #000; color: #fff; padding: 20px; border: 1px solid #39FF14;">
           <h2 style="color: #39FF14;">[SIGNAL_RECEIVED]</h2>
-          <p><strong>SENDER_ID:</strong> ${name}</p>
-          <p><strong>RETURN_ADDRESS:</strong> ${email}</p>
+          <p><strong>NOM:</strong> ${name}</p>
+          <p><strong>EMAIL:</strong> ${email}</p>
           <hr style="border: 0; border-top: 1px solid #333;" />
           <p style="white-space: pre-wrap;">${message}</p>
         </div>
