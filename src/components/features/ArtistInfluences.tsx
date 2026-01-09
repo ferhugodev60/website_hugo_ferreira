@@ -14,9 +14,10 @@ export function ArtistInfluences() {
                 <h2 className="text-xl font-bold tracking-tighter uppercase text-studio-neon">
                     Sensory_Influences <span className="text-white/30 ml-2">// Artists</span>
                 </h2>
-                <span className="text-[10px] text-white/40 uppercase tracking-widest font-mono">
-          Inspiration_Nodes: {favoriteArtists.length}
-        </span>
+                {/* Masqué sur mobile pour éviter la surcharge visuelle */}
+                <span className="hidden md:block text-[10px] text-white/40 uppercase tracking-widest font-mono">
+                    Inspiration_Nodes: {favoriteArtists.length}
+                </span>
             </div>
 
             {/* Le composant Aceternity UI */}

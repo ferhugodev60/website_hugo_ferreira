@@ -25,7 +25,8 @@ export default function SocialLinks() {
     ];
 
     return (
-        <div className="fixed top-10 right-10 z-[60] flex items-center gap-6">
+        /* On retire 'fixed top-10 right-10' pour laisser le parent gérer la position */
+        <div className="flex items-center gap-6">
             {socialLinks.map((link, index) => (
                 <motion.a
                     key={link.name}
@@ -39,7 +40,6 @@ export default function SocialLinks() {
                     className="text-white/30 hover:text-studio-neon transition-all duration-300 relative group p-2"
                 >
                     <div className="absolute inset-0 bg-studio-neon/0 group-hover:bg-studio-neon/5 blur-xl transition-all rounded-full" />
-
                     <svg
                         role="img"
                         viewBox="0 0 24 24"
@@ -49,7 +49,6 @@ export default function SocialLinks() {
                         <title>{link.name}</title>
                         <path d={link.path} />
                     </svg>
-
                     <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[7px] font-mono uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all pointer-events-none text-studio-neon whitespace-nowrap">
                         {link.name}
                     </span>

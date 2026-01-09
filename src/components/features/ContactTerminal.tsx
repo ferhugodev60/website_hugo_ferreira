@@ -42,21 +42,22 @@ export default function ContactTerminal() {
     if (!mounted) return null;
 
     return (
-        // Utilisation de max-w-6xl pour aligner le header avec le reste du portfolio
         <section className="w-full max-w-6xl mx-auto px-6 py-32 relative">
+            {/* Effet de lueur en arrière-plan */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-studio-neon/5 blur-[120px] pointer-events-none" />
 
-            {/* HEADER DE SECTION AJOUTÉ */}
+            {/* HEADER DE SECTION - Aligné sur le Toolkit */}
             <div className="flex items-center justify-between mb-12 border-b border-white/10 pb-4">
                 <h2 className="text-xl font-bold tracking-tighter uppercase text-studio-neon">
                     Contact_Terminal <span className="text-white/30 ml-2">// Connection</span>
                 </h2>
-                <span className="text-[10px] text-white/40 uppercase tracking-widest font-mono">
+                {/* Masqué sur mobile pour éviter la surcharge visuelle */}
+                <span className="hidden md:block text-[10px] text-white/40 uppercase tracking-widest font-mono">
                     System_Status: Awaiting Signal
                 </span>
             </div>
 
-            {/* BOX DU TERMINAL (Maintenue en max-w-4xl pour le confort visuel du formulaire) */}
+            {/* BOX DU TERMINAL */}
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}

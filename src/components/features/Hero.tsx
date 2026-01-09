@@ -17,6 +17,7 @@ export default function Hero() {
         offset: ["start start", "end end"],
     });
 
+    // --- TRANSFORMATIONS ---
     const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.2]);
     const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
     const imgScale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
@@ -35,12 +36,18 @@ export default function Hero() {
         <div ref={containerRef} className="relative h-[200vh] w-full bg-studio-black">
             <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
-                {/* Liens Sociaux fixés en haut à droite */}
-                <motion.div style={{ opacity }} className="absolute top-0 right-0 z-50">
+                {/* 1. SOCIAL LINKS : Centré uniquement sur mobile, fixe à droite sur desktop
+                    - Mobile : absolute + inset-x-0 + justify-center
+                    - Desktop (md) : fixed + top-10 + right-10 (garde ton design exact)
+                */}
+                <motion.div
+                    style={{ opacity }}
+                    className="absolute md:fixed top-10 inset-x-0 md:inset-x-auto md:right-10 z-[70] flex justify-center md:justify-end px-6"
+                >
                     <SocialLinks />
                 </motion.div>
 
-                {/* Arrière-plan Responsive */}
+                {/* 2. BACKGROUND & MASKS */}
                 <motion.div style={{ scale: imgScale, opacity: imgOpacity }} className="absolute inset-0 z-0">
                     <Image
                         src="/images/background.webp"
@@ -56,18 +63,23 @@ export default function Hero() {
                         className="object-cover grayscale contrast-125 block md:hidden"
                         priority
                     />
-                    <div className="absolute inset-0 z-10" style={{ background: `linear-gradient(to top, var(--color-studio-black) 0%, transparent 25%), radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.6) 100%)` }} />
+                    <div
+                        className="absolute inset-0 z-10"
+                        style={{
+                            background: `linear-gradient(to top, var(--color-studio-black) 0%, transparent 25%), radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.6) 100%)`
+                        }}
+                    />
                 </motion.div>
 
-                {/* Contenu Principal : Aligné à gauche sur Desktop, Centré sur Mobile */}
+                {/* 3. MAIN CONTENT (HUGO FERREIRA) */}
                 <motion.div
                     style={{ scale, opacity, y }}
                     className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col items-center md:items-start text-center md:text-left"
                 >
                     <header className="w-full flex flex-col items-center md:items-start">
-        <span className="text-studio-neon text-[10px] uppercase tracking-[0.5em] font-bold block mb-4">
-            Interface Design • Musical composition
-        </span>
+                        <span className="text-studio-neon text-[10px] uppercase tracking-[0.5em] font-bold block mb-4">
+                            Interface Design • Musical composition
+                        </span>
 
                         <div className="flex flex-col items-center md:items-start w-full">
                             <h1 className="text-6xl md:text-9xl font-black text-white leading-none uppercase tracking-[0.02em] md:tracking-tighter">
@@ -90,14 +102,14 @@ export default function Hero() {
                         >
                             <div className="absolute inset-0 bg-studio-neon translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                             <span className="relative z-10 text-[10px] md:text-[11px] font-mono uppercase tracking-[0.3em] text-white group-hover:text-black transition-colors">
-                Explore_Archive
-            </span>
+                                Explore_Archive
+                            </span>
                             <ChevronDown size={16} className="relative z-10 text-studio-neon group-hover:text-black transition-colors animate-bounce" />
                         </button>
                     </motion.div>
                 </motion.div>
 
-                {/* Indicateur de Scroll */}
+                {/* 4. SCROLL INDICATOR */}
                 <motion.div style={{ opacity }} className="absolute bottom-12 flex flex-col items-center gap-4">
                     <span className="text-[10px] uppercase tracking-widest text-studio-neon/40">Initiating Session</span>
                     <div className="w-px h-16 bg-gradient-to-b from-studio-neon/50 to-transparent" />

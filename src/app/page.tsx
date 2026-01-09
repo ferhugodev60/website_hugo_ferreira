@@ -17,7 +17,6 @@ export default function Home() {
             {/* Section d'accueil avec le bouton CTA */}
             <Hero />
 
-            {/* AJOUT DE L'ID : Permet au bouton du Hero de trouver cette cible */}
             <section id="projects-archive" className="relative z-10 pb-10">
                 <TracklistTable />
             </section>
