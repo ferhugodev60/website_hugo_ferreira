@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import SocialLinks from "@/components/layout/SocialLinks";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
@@ -11,6 +11,7 @@ import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
     const { playClick } = useSoundEffects();
+    const prefersReducedMotion = useReducedMotion();
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -119,7 +120,7 @@ export default function Hero() {
                             <span className="relative z-10 text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.3em] text-white group-hover:text-black transition-colors">
                                 Découvrir mes projets
                             </span>
-                            <ChevronDown size={16} className="relative z-10 text-studio-neon group-hover:text-black transition-colors animate-bounce" />
+                            <ChevronDown size={16} className="hidden md:block relative z-10 text-studio-neon group-hover:text-black transition-colors animate-bounce" />
                         </button>
 
                         <button
@@ -131,8 +132,13 @@ export default function Hero() {
                     </motion.div>
                 </motion.div>
 
-                {/* 4. SCROLL INDICATOR */}
-                <motion.div style={{ opacity }} className="absolute bottom-12 flex flex-col items-center gap-4">
+                {/* 4. SCROLL INDICATOR (desktop uniquement, prend trop de place sur mobile) */}
+                <motion.div
+                    style={{ opacity }}
+                    animate={prefersReducedMotion ? undefined : { y: [0, 10, 0] }}
+                    transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                    className="hidden md:flex absolute bottom-4 flex-col items-center gap-4"
+                >
                     <span className="text-[10px] uppercase tracking-[0.3em] text-studio-neon/40">Scroll</span>
                     <div className="w-px h-16 bg-gradient-to-b from-studio-neon/50 to-transparent" />
                 </motion.div>

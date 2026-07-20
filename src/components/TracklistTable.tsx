@@ -88,7 +88,7 @@ export default function TracklistTable() {
 
                             {/* Stack Technique - Déjà configuré pour se masquer sur mobile */}
                             <div className="hidden md:flex items-center gap-2">
-                                {project.stack.slice(0, 3).map((tech) => (
+                                {project.stack.map((tech) => (
                                     <span key={tech} className="px-2 py-1 bg-white/5 border border-white/5 rounded text-[9px] text-white/60 font-mono uppercase tracking-widest">
                                         {tech}
                                     </span>
