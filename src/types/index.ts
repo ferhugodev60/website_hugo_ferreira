@@ -12,4 +12,5 @@ export interface ProjectTrack {
     approach: string;
     result: string;
     liveUrl?: string;
+    comingSoon?: boolean;
 }

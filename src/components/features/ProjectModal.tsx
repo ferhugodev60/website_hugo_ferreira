@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Music, Layers, Globe, Play, Pause, SkipBack, SkipForward } from "lucide-react";
+import { X, Music, Layers, Globe, Clock, Play, Pause, SkipBack, SkipForward } from "lucide-react";
 import { useUIStore } from "@/store/useUIStore";
 import { useAudioStore } from "@/store/useAudioStore";
 import { projects } from "@/data/projects";
@@ -181,8 +181,18 @@ export default function ProjectModal() {
                                         ? 'bg-white text-black hover:bg-studio-neon cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.05)]'
                                         : 'bg-white/5 text-white/20 cursor-not-allowed'}`}
                                 >
-                                    <Globe size={18} />
-                                    {project.liveUrl ? "Voir le projet" : "Projet hors ligne"}
+                                    {project.liveUrl ? (
+                                        <Globe size={18} />
+                                    ) : project.comingSoon ? (
+                                        <Clock size={18} />
+                                    ) : (
+                                        <Globe size={18} />
+                                    )}
+                                    {project.liveUrl
+                                        ? "Voir le projet"
+                                        : project.comingSoon
+                                        ? "Bientôt disponible"
+                                        : "Projet hors ligne"}
                                 </button>
                             </div>
                         </div>

@@ -28,5 +28,19 @@ export const projects: ProjectTrack[] = [
         approach: "Un site sur-mesure (React, Tailwind, Node, Express) pensé comme une vitrine directe, avec une direction visuelle alignée sur l'univers streetwear de la marque.",
         result: "Site livré et en production, aujourd'hui la vitrine digitale du commerce.",
         liveUrl: "https://www.greenlightdistrict.fr/"
+    },
+    {
+        id: "03",
+        title: "Le Verger de Mathis",
+        artist: "Hugo Ferreira",
+        trackName: "Alpha",
+        category: "Web",
+        stack: ["React", "Tailwind", "Node", "Express"],
+        bpm: 128,
+        previewUrl: "/audio/alpha-preview.mp3",
+        context: "Un producteur de pommes qui souhaite permettre la réservation de récoltes directement en ligne.",
+        approach: "Un site de réservation sur-mesure (React, Tailwind, Node, Express), actuellement en cours de développement.",
+        result: "Projet en préparation — lancement à venir.",
+        comingSoon: true
     }
 ];

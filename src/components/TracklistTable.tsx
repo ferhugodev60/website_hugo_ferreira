@@ -80,9 +80,16 @@ export default function TracklistTable() {
 
                             {/* Nom du Projet & Catégorie */}
                             <div className="flex-1 min-w-0">
-                                <h3 className={`text-lg font-bold truncate uppercase tracking-tight transition-colors ${isActive ? 'text-studio-neon' : 'text-white'}`}>
-                                    {project.title}
-                                </h3>
+                                <div className="flex items-center gap-2">
+                                    <h3 className={`text-lg font-bold truncate uppercase tracking-tight transition-colors ${isActive ? 'text-studio-neon' : 'text-white'}`}>
+                                        {project.title}
+                                    </h3>
+                                    {project.comingSoon && (
+                                        <span className="shrink-0 px-2 py-0.5 rounded-full border border-studio-neon/30 text-studio-neon text-[8px] font-mono uppercase tracking-widest">
+                                            Bientôt disponible
+                                        </span>
+                                    )}
+                                </div>
                                 <p className="text-[10px] text-white/40 uppercase tracking-[0.2em] font-mono">
                                     {project.category}
                                 </p>
