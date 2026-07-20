@@ -99,7 +99,7 @@ export default function Hero() {
                         </div>
                     </header>
 
-                    <p className="max-w-2xl text-studio-accent/60 text-sm md:text-xl font-light leading-relaxed italic mt-2 md:mt-2 px-4 md:px-0">
+                    <p className="max-w-2xl text-studio-accent/60 text-sm md:text-xl font-light leading-relaxed mt-2 md:mt-2 px-4 md:px-0">
                         Développeur passionné par la création d&apos;interfaces web sur-mesure.
                     </p>
 

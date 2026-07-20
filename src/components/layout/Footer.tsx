@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause } from "lucide-react";
 import PlayerProgressBar from "@/components/features/PlayerProgressBar";
 import CurrentTrackDisplay from "@/components/features/CurrentTrackDisplay";
@@ -22,9 +23,18 @@ export default function Footer() {
         togglePlay();
     };
 
+    // La barre n'existe que si un projet a été lancé (aucune barre vide au chargement)
     return (
-        <footer className="fixed bottom-0 w-full border-t border-white/10 bg-studio-black/95 backdrop-blur-xl z-50">
-            <PlayerProgressBar />
+        <AnimatePresence>
+            {currentTrackId && (
+                <motion.footer
+                    initial={{ y: "100%", opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: "100%", opacity: 0 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="fixed bottom-0 w-full border-t border-white/10 bg-studio-black/95 backdrop-blur-xl z-50"
+                >
+                    <PlayerProgressBar />
 
             <div className="max-w-screen-2xl mx-auto px-4 h-16 md:h-20 flex items-center justify-between gap-4">
 
@@ -96,6 +106,8 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-        </footer>
+                </motion.footer>
+            )}
+        </AnimatePresence>
     );
 }
