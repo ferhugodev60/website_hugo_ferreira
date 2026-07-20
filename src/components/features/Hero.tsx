@@ -77,6 +77,8 @@ export default function Hero() {
                             background: `linear-gradient(to top, var(--color-studio-black) 0%, transparent 25%), radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.6) 100%)`
                         }}
                     />
+                    {/* Voile sombre supplémentaire sur mobile : le fond mange trop les CTA */}
+                    <div className="absolute inset-0 z-10 bg-black/45 md:hidden" />
                 </motion.div>
 
                 {/* 3. MAIN CONTENT (HUGO FERREIRA) */}
@@ -93,7 +95,12 @@ export default function Hero() {
                             <h1 className="text-6xl md:text-9xl font-black text-white leading-none uppercase tracking-[0.02em] md:tracking-tighter">
                                 HUGO
                             </h1>
-                            <div className="h-[6rem] md:h-[9rem] w-full max-w-[400px] md:max-w-none mx-auto md:mx-0 -mt-2 md:-mt-6 md:-ml-2 overflow-visible">
+                            {/* Mobile : texte plein et statique (pas de survol tactile possible) */}
+                            <h1 className="md:hidden text-6xl font-black text-white leading-none uppercase tracking-[0.02em] -mt-1">
+                                FERREIRA
+                            </h1>
+                            {/* Desktop : effet interactif au survol de la souris */}
+                            <div className="hidden md:block h-[9rem] w-full -mt-6 -ml-2 overflow-visible">
                                 <TextHoverEffect text="FERREIRA" />
                             </div>
                         </div>
@@ -106,7 +113,7 @@ export default function Hero() {
                     <motion.div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-4 pt-8 md:pt-10 w-full">
                         <button
                             onClick={scrollToProjects}
-                            className="group relative flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-transparent border border-white/10 rounded-full overflow-hidden transition-all hover:border-studio-neon/50 cursor-pointer"
+                            className="group relative w-full sm:w-auto flex items-center justify-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-black/30 backdrop-blur-md border border-white/10 rounded-full overflow-hidden transition-all hover:border-studio-neon/50 cursor-pointer"
                         >
                             <div className="absolute inset-0 bg-studio-neon translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                             <span className="relative z-10 text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.3em] text-white group-hover:text-black transition-colors">
@@ -117,7 +124,7 @@ export default function Hero() {
 
                         <button
                             onClick={scrollToContact}
-                            className="flex items-center gap-2 px-8 md:px-10 py-4 md:py-5 bg-transparent text-white/60 hover:text-studio-neon text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.3em] transition-colors cursor-pointer"
+                            className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 md:px-10 py-4 md:py-5 bg-black/30 backdrop-blur-md border border-white/10 rounded-full text-white/80 hover:text-studio-neon hover:border-studio-neon/40 text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.3em] transition-colors cursor-pointer"
                         >
                             Me contacter
                         </button>

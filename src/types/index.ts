@@ -5,7 +5,6 @@ export interface ProjectTrack {
     trackName: string;
     category: "Web" | "Design" | "Audio";
     stack: string[];
-    bpm: number;
     coverUrl?: string;
     previewUrl: string;
     context: string;

@@ -15,10 +15,10 @@ export default function Manifesto() {
 
     return (
         <section className="max-w-6xl mx-auto px-6 py-20 relative">
-            {/* Ligne de connexion verticale */}
-            <div className="absolute top-0 left-10 w-px h-full bg-linear-to-b from-studio-neon/20 via-studio-neon/10 to-transparent" />
+            {/* Ligne de connexion verticale (masquée sur mobile, prend trop de place) */}
+            <div className="hidden md:block absolute top-0 left-10 w-px h-full bg-linear-to-b from-studio-neon/20 via-studio-neon/10 to-transparent" />
 
-            <div className="pl-12 space-y-12">
+            <div className="md:pl-12 space-y-12">
                 {/* Header de section */}
                 <div className="flex items-center gap-4">
                     <span className="text-[10px] font-bold text-studio-neon uppercase tracking-[0.3em]">

@@ -45,19 +45,13 @@ export default function TracklistTable() {
                         <motion.div
                             key={project.id}
                             initial={{ opacity: 0, y: 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.05 }}
+                            whileInView={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
                             viewport={{ once: true }}
-                            // Interaction épurée
-                            whileHover={{
-                                backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                borderColor: "rgba(57, 255, 20, 0.2)"
-                            }}
                             onClick={() => handleProjectSelect(project.id)}
                             className={`group flex items-center gap-4 p-4 rounded-xl transition-all border duration-300 cursor-pointer
                                 ${isCurrent
                                 ? 'bg-white/10 border-white/20'
-                                : 'border-transparent bg-transparent'
+                                : 'border-transparent bg-transparent hover:bg-white/5 hover:border-studio-neon/20'
                             }`}
                         >
                             {/* Visualiseur ou ID statique */}
@@ -78,10 +72,10 @@ export default function TracklistTable() {
                                 )}
                             </div>
 
-                            {/* Nom du Projet & Catégorie */}
+                            {/* Nom du Projet */}
                             <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2">
-                                    <h3 className={`text-lg font-bold truncate uppercase tracking-tight transition-colors ${isActive ? 'text-studio-neon' : 'text-white'}`}>
+                                <div className="flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-2">
+                                    <h3 className={`text-lg font-bold uppercase tracking-tight transition-colors ${isActive ? 'text-studio-neon' : 'text-white'}`}>
                                         {project.title}
                                     </h3>
                                     {project.comingSoon && (
@@ -90,9 +84,6 @@ export default function TracklistTable() {
                                         </span>
                                     )}
                                 </div>
-                                <p className="text-[10px] text-white/40 uppercase tracking-[0.2em] font-mono">
-                                    {project.category}
-                                </p>
                             </div>
 
                             {/* Stack Technique - Déjà configuré pour se masquer sur mobile */}
@@ -102,13 +93,6 @@ export default function TracklistTable() {
                                         {tech}
                                     </span>
                                 ))}
-                            </div>
-
-                            {/* BPM Info - Masqué sur tablettes et mobiles */}
-                            <div className="hidden lg:block w-24 text-right">
-                                <span className={`text-xs font-mono italic ${isActive ? 'text-studio-neon' : 'text-white/20'}`}>
-                                    {project.bpm} BPM
-                                </span>
                             </div>
                         </motion.div>
                     );
