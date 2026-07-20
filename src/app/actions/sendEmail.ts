@@ -17,7 +17,7 @@ export async function sendEmail(formData: { name: string; email: string; message
             text: `Message de ${name} (${email}) :\n\n${message}`,
             html: `
         <div style="font-family: monospace; background: #000; color: #fff; padding: 20px; border: 1px solid #39FF14;">
-          <h2 style="color: #39FF14;">[SIGNAL_RECEIVED]</h2>
+          <h2 style="color: #39FF14;">[SIGNAL_REÇU]</h2>
           <p><strong>NOM:</strong> ${name}</p>
           <p><strong>EMAIL:</strong> ${email}</p>
           <hr style="border: 0; border-top: 1px solid #333;" />

@@ -3,28 +3,30 @@ import { ProjectTrack } from "@/types";
 export const projects: ProjectTrack[] = [
     {
         id: "01",
-        title: "Project Greenlight",
-        artist: "Travis Scott",
-        trackName: "THANK GOD",
+        title: "L'Atelier de la Route du Rhum",
+        artist: "Hugo Ferreira",
+        trackName: "Alpha",
         category: "Web",
         stack: ["React", "Tailwind", "Node", "Express"],
-        bpm: 135,
-        coverUrl: "https://upload.wikimedia.org/wikipedia/en/2/23/Travis_Scott_-_Utopia.png",
-        previewUrl: "/audio/thank-god.mp3",
-        description: "Mise en place du site d'un concept-store de sneakers et streetwear basé à Compiègne.",
-        liveUrl: "https://www.greenlightdistrict.fr/"
+        bpm: 128,
+        previewUrl: "/audio/alpha-preview.mp3",
+        context: "Un artisan spécialisé dans le rhum arrangé, basé à Compiègne, qui voulait vendre ses bouteilles, ses cartes cadeaux et ses ateliers en ligne, sans disposer d'aucune plateforme e-commerce.",
+        approach: "Un site e-commerce sur-mesure (React, Tailwind, Node, Express) avec vente de bouteilles, achat de cartes cadeaux et réservation d'ateliers en ligne.",
+        result: "Site e-commerce livré et en production, aujourd'hui la plateforme de vente de l'atelier.",
+        liveUrl: "https://atelier-route-du-rhum.com/"
     },
     {
         id: "02",
-        title: "Project L'Atelier de le Route du Rhum",
-        artist: "Travis Scott",
-        trackName: "THANK GOD",
+        title: "Greenlight District",
+        artist: "Hugo Ferreira",
+        trackName: "Alpha",
         category: "Web",
         stack: ["React", "Tailwind", "Node", "Express"],
-        bpm: 135,
-        coverUrl: "https://upload.wikimedia.org/wikipedia/en/2/23/Travis_Scott_-_Utopia.png",
-        previewUrl: "/audio/thank-god.mp3",
-        description: "Mise en place du site d'un artisan spécialisé dans la fabrication de rhum arrangé basé à Compiègne.",
-        liveUrl: "https://atelier-route-du-rhum.com/"
-    },
+        bpm: 128,
+        previewUrl: "/audio/alpha-preview.mp3",
+        context: "Un concept-store de sneakers et streetwear à Compiègne, existant uniquement en physique, sans vitrine pour présenter sa sélection en ligne.",
+        approach: "Un site sur-mesure (React, Tailwind, Node, Express) pensé comme une vitrine directe, avec une direction visuelle alignée sur l'univers streetwear de la marque.",
+        result: "Site livré et en production, aujourd'hui la vitrine digitale du commerce.",
+        liveUrl: "https://www.greenlightdistrict.fr/"
+    }
 ];

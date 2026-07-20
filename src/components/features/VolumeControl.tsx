@@ -24,6 +24,7 @@ export default function VolumeControl() {
         >
             <button
                 onClick={handleMuteToggle}
+                aria-label={isMuted || volume === 0 ? "Réactiver le son" : "Couper le son"}
                 className="text-white/40 hover:text-studio-neon transition-colors cursor-pointer p-1"
             >
                 {isMuted || volume === 0 ? (
@@ -49,9 +50,12 @@ export default function VolumeControl() {
                     step="0.01"
                     value={isMuted ? 0 : volume}
                     onChange={(e) => setVolume(parseFloat(e.target.value))}
+                    onFocus={() => setIsHovered(true)}
+                    onBlur={() => setIsHovered(false)}
+                    aria-label="Volume"
                     className="w-20 h-1 bg-white/10 appearance-none rounded-full cursor-pointer accent-studio-neon"
                     style={{
-                        backgroundImage: `linear-gradient(to right, #95FF00 ${ (isMuted ? 0 : volume) * 100}%, transparent 0%)`
+                        backgroundImage: `linear-gradient(to right, #39FF14 ${ (isMuted ? 0 : volume) * 100}%, transparent 0%)`
                     }}
                 />
             </motion.div>

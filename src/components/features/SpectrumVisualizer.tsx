@@ -35,7 +35,7 @@ export default function SpectrumVisualizer() {
                 const barHeight = (dataArray[i] / 255) * canvas.height;
 
                 // Couleur Neon Studio
-                ctx.fillStyle = `rgba(0, 255, 102, ${dataArray[i] / 255})`;
+                ctx.fillStyle = `rgba(57, 255, 20, ${dataArray[i] / 255})`;
                 ctx.fillRect(x, canvas.height - barHeight, barWidth - 1, barHeight);
 
                 x += barWidth;

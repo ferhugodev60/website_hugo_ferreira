@@ -7,30 +7,24 @@ import Footer from "@/components/layout/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://hugo-ferreira.fr"),
     title: {
-        default: "HUGO FERREIRA | Studio",
+        default: "HUGO FERREIRA | Développeur Full-Stack",
         template: "%s | Hugo Ferreira"
     },
-    description: "Creative Technologist & Beatmaker. Fusion entre code et design sonore.",
+    description: "Développeur Full-Stack passionné par la création d'interfaces web sur-mesure.",
     openGraph: {
-        title: "HUGO FERREIRA | Creative Technologist",
-        description: "Exploration immersive de projets numériques et sonores.",
+        title: "HUGO FERREIRA | Développeur Full-Stack",
+        description: "Portfolio de projets web sur-mesure, alliant développement et design d'interface.",
         url: "https://hugo-ferreira.fr",
         siteName: "Hugo Ferreira Portfolio",
-        images: [
-            {
-                url: "/og-image.jpg", // Prépare une capture de ton Hero section
-                width: 1200,
-                height: 630,
-            },
-        ],
         locale: "fr_FR",
         type: "website",
     },
     twitter: {
         card: "summary_large_image",
         title: "HUGO FERREIRA",
-        description: "Creative Technologist & Beatmaker.",
+        description: "Développeur Full-Stack.",
     },
 };
 

@@ -25,6 +25,7 @@ export const TextHoverEffect = ({
     useEffect(() => {
         if (svgRef.current) {
             const svgRect = svgRef.current.getBoundingClientRect();
+            if (svgRect.width === 0 || svgRect.height === 0) return;
             const cxPercentage = ((cursor.x - svgRect.left) / svgRect.width) * 100;
             const cyPercentage = ((cursor.y - svgRect.top) / svgRect.height) * 100;
             setMaskPosition({ cx: `${cxPercentage}%`, cy: `${cyPercentage}%` });
@@ -52,7 +53,7 @@ export const TextHoverEffect = ({
                     {hovered && (
                         <>
                             <stop offset="0%" stopColor="#39FF14" />
-                            <stop offset="50%" stopColor="#22c55e" />
+                            <stop offset="50%" stopColor="rgba(57,255,20,0.45)" />
                             <stop offset="100%" stopColor="#39FF14" />
                         </>
                     )}
@@ -62,6 +63,7 @@ export const TextHoverEffect = ({
                     id="revealMask"
                     gradientUnits="userSpaceOnUse"
                     r="25%"
+                    initial={maskPosition}
                     animate={maskPosition}
                     transition={{ duration: duration ?? 0, ease: "easeOut" }}
                 >
@@ -80,7 +82,7 @@ export const TextHoverEffect = ({
                 textAnchor={anchor}
                 dominantBaseline="middle"
                 strokeWidth="0.3"
-                className="fill-transparent stroke-neutral-200 font-[helvetica] text-5xl md:text-6xl font-bold dark:stroke-neutral-800 opacity-20"
+                className="fill-transparent stroke-white/20 font-[helvetica] text-5xl md:text-6xl font-bold opacity-20"
             >
                 {text}
             </text>
@@ -91,7 +93,7 @@ export const TextHoverEffect = ({
                 textAnchor={anchor}
                 dominantBaseline="middle"
                 strokeWidth="0.3"
-                className="fill-transparent stroke-neutral-200 font-[helvetica] text-5xl md:text-6xl font-bold dark:stroke-neutral-800"
+                className="fill-transparent stroke-white/20 font-[helvetica] text-5xl md:text-6xl font-bold"
                 initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
                 animate={{ strokeDashoffset: 0, strokeDasharray: 1000 }}
                 transition={{ duration: 4, ease: "easeInOut" }}

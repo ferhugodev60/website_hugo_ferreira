@@ -6,8 +6,10 @@ export interface ProjectTrack {
     category: "Web" | "Design" | "Audio";
     stack: string[];
     bpm: number;
-    coverUrl: string;
+    coverUrl?: string;
     previewUrl: string;
-    description: string;
+    context: string;
+    approach: string;
+    result: string;
     liveUrl?: string;
 }

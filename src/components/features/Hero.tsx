@@ -26,9 +26,17 @@ export default function Hero() {
 
     const scrollToProjects = () => {
         playClick();
-        const projectsSection = document.getElementById("projects-archive");
+        const projectsSection = document.getElementById("projects");
         if (projectsSection) {
             projectsSection.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
+    const scrollToContact = () => {
+        playClick();
+        const contactSection = document.getElementById("contact");
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: "smooth" });
         }
     };
 
@@ -78,7 +86,7 @@ export default function Hero() {
                 >
                     <header className="w-full flex flex-col items-center md:items-start">
                         <span className="text-studio-neon text-[10px] uppercase tracking-[0.5em] font-bold block mb-4">
-                            Interface Design • Musical composition
+                            Développeur Full-Stack
                         </span>
 
                         <div className="flex flex-col items-center md:items-start w-full">
@@ -91,27 +99,34 @@ export default function Hero() {
                         </div>
                     </header>
 
-                    <p className="max-w-2xl text-studio-accent/60 text-sm md:text-xl font-light leading-relaxed italic font-mono mt-2 md:mt-2 px-4 md:px-0">
-                        Passionné par le Web Design et la Musique Assistée par Ordinateur (MAO)
+                    <p className="max-w-2xl text-studio-accent/60 text-sm md:text-xl font-light leading-relaxed italic mt-2 md:mt-2 px-4 md:px-0">
+                        Développeur passionné par la création d&apos;interfaces web sur-mesure.
                     </p>
 
-                    <motion.div className="flex justify-center md:justify-start pt-8 md:pt-10 w-full">
+                    <motion.div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-4 pt-8 md:pt-10 w-full">
                         <button
                             onClick={scrollToProjects}
-                            className="group relative flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-transparent border border-white/10 rounded-full overflow-hidden transition-all hover:border-studio-neon/50"
+                            className="group relative flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-transparent border border-white/10 rounded-full overflow-hidden transition-all hover:border-studio-neon/50 cursor-pointer"
                         >
                             <div className="absolute inset-0 bg-studio-neon translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-                            <span className="relative z-10 text-[10px] md:text-[11px] font-mono uppercase tracking-[0.3em] text-white group-hover:text-black transition-colors">
-                                Explore_Archive
+                            <span className="relative z-10 text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.3em] text-white group-hover:text-black transition-colors">
+                                Découvrir mes projets
                             </span>
                             <ChevronDown size={16} className="relative z-10 text-studio-neon group-hover:text-black transition-colors animate-bounce" />
+                        </button>
+
+                        <button
+                            onClick={scrollToContact}
+                            className="flex items-center gap-2 px-8 md:px-10 py-4 md:py-5 bg-transparent text-white/60 hover:text-studio-neon text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.3em] transition-colors cursor-pointer"
+                        >
+                            Me contacter
                         </button>
                     </motion.div>
                 </motion.div>
 
                 {/* 4. SCROLL INDICATOR */}
                 <motion.div style={{ opacity }} className="absolute bottom-12 flex flex-col items-center gap-4">
-                    <span className="text-[10px] uppercase tracking-widest text-studio-neon/40">Initiating Session</span>
+                    <span className="text-[10px] uppercase tracking-[0.3em] text-studio-neon/40">Scroll</span>
                     <div className="w-px h-16 bg-gradient-to-b from-studio-neon/50 to-transparent" />
                 </motion.div>
             </div>

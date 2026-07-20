@@ -13,7 +13,7 @@ export default function CurrentTrackDisplay() {
         return (
             <div className="flex flex-col">
                 <p className="text-[10px] font-mono text-white/20 uppercase tracking-[0.3em] animate-pulse">
-                    // Standby_Mode
+                    En pause
                 </p>
             </div>
         );
@@ -33,11 +33,11 @@ export default function CurrentTrackDisplay() {
 
             {/* 3. METADATA (BPM / Stack) */}
             <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-[8px] text-white/20 font-mono uppercase tracking-tighter">
+                <span className="text-[8px] text-white/40 font-mono uppercase tracking-tighter">
                     {currentTrack.bpm} BPM
                 </span>
                 <span className="text-[8px] text-white/10 font-mono hidden sm:inline">
-                    // {currentTrack.category}
+                    {"// "}{currentTrack.category}
                 </span>
             </div>
         </div>

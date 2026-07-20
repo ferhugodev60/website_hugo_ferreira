@@ -27,14 +27,13 @@ export default function TracklistTable() {
     return (
         <div className="w-full max-w-6xl mx-auto px-6 py-20">
             {/* HEADER DE SECTION - Aligné sur le reste du portfolio */}
-            <div className="flex items-center justify-between mb-8 border-b border-white/10 pb-4">
-                <h2 className="text-xl font-bold tracking-tighter uppercase text-studio-neon">
-                    Project Archive <span className="text-white/30 ml-2">// Portfolio</span>
-                </h2>
-                {/* Masqué sur mobile pour épurer l'interface */}
-                <span className="hidden md:block text-[10px] text-white/40 uppercase tracking-widest font-mono">
-                    {projects.length} Entries Detected
+            <div className="mb-8 border-b border-white/10 pb-4">
+                <span className="text-[10px] font-bold text-studio-neon uppercase tracking-[0.3em]">
+                    Portfolio
                 </span>
+                <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white mt-2">
+                    Mes projets
+                </h2>
             </div>
 
             <div className="space-y-1">
@@ -52,7 +51,7 @@ export default function TracklistTable() {
                             // Interaction épurée
                             whileHover={{
                                 backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                borderColor: "rgba(149, 255, 0, 0.2)"
+                                borderColor: "rgba(57, 255, 20, 0.2)"
                             }}
                             onClick={() => handleProjectSelect(project.id)}
                             className={`group flex items-center gap-4 p-4 rounded-xl transition-all border duration-300 cursor-pointer
@@ -92,7 +91,7 @@ export default function TracklistTable() {
                             {/* Stack Technique - Déjà configuré pour se masquer sur mobile */}
                             <div className="hidden md:flex items-center gap-2">
                                 {project.stack.slice(0, 3).map((tech) => (
-                                    <span key={tech} className="px-2 py-1 bg-white/5 border border-white/5 rounded text-[9px] text-white/40 font-mono uppercase tracking-widest">
+                                    <span key={tech} className="px-2 py-1 bg-white/5 border border-white/5 rounded text-[9px] text-white/60 font-mono uppercase tracking-widest">
                                         {tech}
                                     </span>
                                 ))}

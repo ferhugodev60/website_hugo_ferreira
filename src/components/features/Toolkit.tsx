@@ -6,41 +6,39 @@ export default function Toolkit() {
     const tools = [
         {
             name: "React",
-            category: "Frontend_Library",
+            category: "Librairie Frontend",
             logo: "https://cdn.simpleicons.org/react/61DAFB",
             description: "Développement d'interfaces dynamiques et modulaires."
         },
         {
+            name: "Next.js",
+            category: "Framework React",
+            logo: "https://cdn.simpleicons.org/nextdotjs/FFFFFF",
+            description: "Rendu hybride, routing et Server Actions pour des applications full-stack."
+        },
+        {
             name: "Tailwind",
-            category: "Styling_Engine",
+            category: "Moteur de Styles",
             logo: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
             description: "Conception de systèmes de design atomiques et fluides."
         },
         {
             name: "Node.js",
-            category: "Backend_Runtime",
+            category: "Runtime Backend",
             logo: "https://cdn.simpleicons.org/nodedotjs/339933",
             description: "Logique serveur et architectures scalables."
-        },
-        {
-            name: "FL Studio",
-            category: "Audio_DAW",
-            logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/fl-studio.webp",
-            description: "Composition musicale, Sound Design et mixage pro."
         }
     ];
 
     return (
         <section className="w-full max-w-6xl mx-auto px-6 py-24">
-            <div className="flex items-center justify-between mb-12 border-b border-white/10 pb-4">
-                <h2 className="text-xl font-bold tracking-tighter uppercase text-studio-neon">
-                    Toolkit_Inventory <span className="text-white/30 ml-2">// Stack & Software</span>
-                </h2>
-
-                {/* Le compteur est maintenant masqué sur mobile */}
-                <span className="hidden md:block text-[10px] text-white/40 uppercase tracking-widest font-mono">
-                    Nodes_Detected: 04
+            <div className="mb-12 border-b border-white/10 pb-4">
+                <span className="text-[10px] font-bold text-studio-neon uppercase tracking-[0.3em]">
+                    Stack & Outils
                 </span>
+                <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white mt-2">
+                    Ce que j&apos;utilise au quotidien
+                </h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -57,14 +55,13 @@ export default function Toolkit() {
 
                         <div className="relative z-10 flex flex-col items-center text-center">
                             <motion.div
-                                className="mb-6 h-12 w-12 flex items-center justify-center grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-500 transform md:group-hover:scale-110"
-                                animate={tool.name === "React" ? { rotate: [0, 360] } : {}}
-                                transition={tool.name === "React" ? {
-                                    duration: 8,
-                                    repeat: Infinity,
-                                    ease: "linear",
-                                    repeatType: "loop"
-                                } : {}}
+                                className="mb-6 h-12 w-12 flex items-center justify-center grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-[filter] duration-500"
+                                animate={tool.name === "React" ? { rotate: 360 } : undefined}
+                                whileHover={{ scale: 1.1 }}
+                                transition={{
+                                    rotate: { duration: 8, repeat: Infinity, ease: "linear" },
+                                    scale: { duration: 0.3, ease: "easeOut" }
+                                }}
                             >
                                 <img
                                     src={tool.logo}
@@ -74,7 +71,7 @@ export default function Toolkit() {
                             </motion.div>
 
                             <div className="space-y-1">
-                                <span className="text-[8px] font-mono text-studio-neon/40 uppercase tracking-[0.2em]">
+                                <span className="text-[10px] text-studio-neon/50 uppercase tracking-[0.15em]">
                                     {tool.category}
                                 </span>
                                 <h3 className="text-xl font-bold text-white tracking-tight">
@@ -84,13 +81,9 @@ export default function Toolkit() {
 
                             <div className="mt-4 h-px transition-all duration-500 w-16 bg-studio-neon md:w-8 md:bg-white/10 md:group-hover:w-16 md:group-hover:bg-studio-neon" />
 
-                            <p className="mt-4 text-[11px] text-white/40 font-mono leading-relaxed opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500">
+                            <p className="mt-4 text-[11px] text-white/40 leading-relaxed opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500">
                                 {tool.description}
                             </p>
-                        </div>
-
-                        <div className="absolute bottom-2 right-3 text-[7px] font-mono uppercase transition-colors text-studio-neon/20 md:text-white/5 md:group-hover:text-studio-neon/20">
-                            Module_0{index + 1}
                         </div>
                     </motion.div>
                 ))}

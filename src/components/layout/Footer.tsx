@@ -50,6 +50,7 @@ export default function Footer() {
                     {/* Bouton Play/Stop Rapide */}
                     <button
                         onClick={handleTogglePlay}
+                        aria-label={isPlaying ? "Mettre en pause" : "Lancer la lecture"}
                         className="p-2 rounded-full bg-white/5 hover:bg-studio-neon hover:text-studio-black transition-all group cursor-pointer border border-white/5"
                     >
                         {isPlaying ? (
@@ -68,7 +69,7 @@ export default function Footer() {
                 {/* 2. Timecode : Centre */}
                 <div className="hidden md:flex flex-col items-center font-mono px-4 shrink-0">
                     <TimeDisplay />
-                    <p className="text-[7px] uppercase tracking-[0.3em] opacity-30">SMPTE System</p>
+                    <p className="text-[7px] uppercase tracking-[0.3em] opacity-30">Système SMPTE</p>
                 </div>
 
                 {/* 3. Volume & Status : Droite */}
@@ -83,14 +84,14 @@ export default function Footer() {
                     <div className="flex items-center gap-2.5">
                         <div className={`w-1.5 h-1.5 rounded-full shrink-0 
         ${isPlaying
-                            ? 'bg-studio-neon animate-pulse shadow-[0_0_8px_rgba(149,255,0,0.5)]'
+                            ? 'bg-studio-neon animate-pulse shadow-[0_0_8px_rgba(57,255,20,0.5)]'
                             : 'bg-white/20'
                         } 
         /* On descend la diode de 0.5px pour l'aligner sur le centre des majuscules */
         translate-y-[0.5px]`}
                         />
                         <span className="hidden lg:inline text-[9px] uppercase tracking-widest text-white/40 font-mono leading-none">
-        {isPlaying ? "Signal Active" : "Standby"}
+        {isPlaying ? "En lecture" : "En pause"}
     </span>
                     </div>
                 </div>
