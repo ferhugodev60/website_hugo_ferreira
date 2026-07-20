@@ -25,6 +25,6 @@ export const projects: ProjectTrack[] = [
         coverUrl: "https://upload.wikimedia.org/wikipedia/en/2/23/Travis_Scott_-_Utopia.png",
         previewUrl: "/audio/thank-god.mp3",
         description: "Mise en place du site d'un artisan spécialisé dans la fabrication de rhum arrangé basé à Compiègne.",
-        liveUrl: "https://atelier-route-du-rhum-project.vercel.app/"
+        liveUrl: "https://atelier-route-du-rhum.com/"
     },
 ];
