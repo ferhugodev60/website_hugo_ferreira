@@ -32,7 +32,7 @@ export default async function OpengraphImage() {
                         marginBottom: 28,
                     }}
                 >
-                    Développeur Full-Stack
+                    Sites web sur-mesure
                 </div>
                 <div
                     style={{
@@ -55,7 +55,7 @@ export default async function OpengraphImage() {
                         marginTop: 32,
                     }}
                 >
-                    Développeur passionné par la création d&apos;interfaces web sur-mesure
+                    Des sites qui apportent des clients aux commerçants et artisans
                 </div>
             </div>
         ),

@@ -1,23 +1,22 @@
 "use client";
 
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { useSoundEffects } from "@/hooks/useSoundEffects";
 import { Send, CheckCircle2, AlertCircle } from "lucide-react";
+import SectionHeader from "@/components/ui/section-header";
 import { sendEmail } from "@/app/actions/sendEmail";
 
-type ContactFormData = { name: string; email: string; message: string };
+type ContactFormData = { name: string; email: string; phone: string; message: string; website: string };
 
 export default function Contact() {
     const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm<ContactFormData>();
     const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-    const { playTransmit } = useSoundEffects();
 
     const onSubmit = async (data: ContactFormData) => {
         try {
             setStatus("idle");
-            playTransmit();
 
             const result = await sendEmail(data);
 
@@ -36,15 +35,7 @@ export default function Contact() {
         <section className="w-full max-w-6xl mx-auto px-6 py-32 relative">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-studio-neon/5 blur-[120px] pointer-events-none" />
 
-            {/* HEADER DE SECTION */}
-            <div className="mb-12 border-b border-white/10 pb-4">
-                <span className="text-[10px] font-bold text-studio-neon uppercase tracking-[0.3em]">
-                    Contact
-                </span>
-                <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white mt-2">
-                    Un projet en tête ? Parlons-en.
-                </h2>
-            </div>
+            <SectionHeader label="Contact" title="Réservez votre appel gratuit de 20 minutes" />
 
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -61,7 +52,7 @@ export default function Contact() {
                             </label>
                             <input
                                 id="contact-name"
-                                {...register("name", { required: true })}
+                                {...register("name", { required: true, maxLength: 100 })}
                                 placeholder="Votre nom"
                                 className="w-full bg-transparent border-b border-white/10 py-3 text-sm focus:border-studio-neon outline-none transition-all placeholder:text-white/25"
                             />
@@ -82,17 +73,44 @@ export default function Contact() {
                     </div>
 
                     <div className="space-y-2">
+                        <label htmlFor="contact-phone" className="text-xs font-medium text-white/60">
+                            Téléphone (facultatif, pour vous rappeler)
+                        </label>
+                        <input
+                            id="contact-phone"
+                            {...register("phone", { maxLength: 30 })}
+                            type="tel"
+                            autoComplete="tel"
+                            placeholder="06 00 00 00 00"
+                            className="w-full bg-transparent border-b border-white/10 py-3 text-sm focus:border-studio-neon outline-none transition-all placeholder:text-white/25"
+                        />
+                    </div>
+
+                    {/* Champ piège anti-robots, invisible pour les visiteurs */}
+                    <div className="hidden" aria-hidden="true">
+                        <label htmlFor="contact-website">Ne pas remplir</label>
+                        <input id="contact-website" {...register("website")} tabIndex={-1} autoComplete="off" />
+                    </div>
+
+                    <div className="space-y-2">
                         <label htmlFor="contact-message" className="text-xs font-medium text-white/50">
                             Message
                         </label>
                         <textarea
                             id="contact-message"
-                            {...register("message", { required: true })}
+                            {...register("message", { required: true, maxLength: 5000 })}
                             rows={4}
-                            placeholder="Parlez-moi de votre projet..."
+                            placeholder="Votre activité, votre besoin, et vos disponibilités pour l'appel..."
                             className="w-full bg-white/[0.02] border border-white/5 rounded-lg p-4 text-sm focus:border-studio-neon/50 outline-none transition-all placeholder:text-white/25 resize-none"
                         />
                     </div>
+
+                    <p className="text-xs text-white/60 leading-relaxed">
+                        Vos données servent uniquement à vous répondre.{" "}
+                        <Link href="/confidentialite" className="underline hover:text-studio-neon">
+                            Politique de confidentialité
+                        </Link>
+                    </p>
 
                     <div className="relative">
                         <motion.button
@@ -106,7 +124,7 @@ export default function Contact() {
                                 : 'bg-white/5 text-white/20 cursor-not-allowed'}`}
                         >
                             <Send size={18} />
-                            {isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
+                            {isSubmitting ? "Envoi en cours..." : "Demander mon appel gratuit"}
                         </motion.button>
 
                         {/* Feedback après envoi */}

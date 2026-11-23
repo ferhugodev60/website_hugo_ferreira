@@ -2,42 +2,75 @@
 
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const MAX_LENGTH = { name: 100, email: 200, phone: 30, message: 5000 };
+const EMAIL_PATTERN = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
 
-export async function sendEmail(formData: { name: string; email: string; message: string }) {
+const escapeHtml = (value: string) =>
+    value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+/** Nettoie un champ d'une seule ligne (pas de saut de ligne dans un sujet d'email). */
+const singleLine = (value: unknown) =>
+    typeof value === "string" ? value.replace(/[\r\n]+/g, " ").trim() : "";
+
+interface ContactPayload {
+    name: string;
+    email: string;
+    phone?: string;
+    message: string;
+    /** Champ piège : invisible pour un humain, rempli par les robots. */
+    website?: string;
+}
+
+export async function sendEmail(formData: ContactPayload) {
     try {
-        const { name, email, message } = formData;
+        // Un robot a rempli le champ piège : on répond « ok » sans rien envoyer
+        if (formData?.website) return { success: true };
 
-        // 1. Destructuration de la réponse (on récupère data ET error)
+        const name = singleLine(formData?.name);
+        const email = singleLine(formData?.email);
+        const phone = singleLine(formData?.phone);
+        const message = typeof formData?.message === "string" ? formData.message.trim() : "";
+
+        const isValid =
+            name.length > 0 && name.length <= MAX_LENGTH.name &&
+            email.length <= MAX_LENGTH.email && EMAIL_PATTERN.test(email) &&
+            phone.length <= MAX_LENGTH.phone &&
+            message.length > 0 && message.length <= MAX_LENGTH.message;
+
+        if (!isValid) return { success: false, error: "Champs invalides" };
+
+        const resend = new Resend(process.env.RESEND_API_KEY);
         const { data, error } = await resend.emails.send({
-            from: `Hugo FERREIRA Website Contact <contact@hugo-ferreira.fr>`,
+            from: "Site hugo-ferreira.fr <contact@hugo-ferreira.fr>",
             to: ["ferreira.hugo602@gmail.com"],
-            subject: `Nouveau Signal : ${name}`,
+            subject: `Demande d'appel : ${name}`,
             replyTo: email,
-            text: `Message de ${name} (${email}) :\n\n${message}`,
+            text: `Message de ${name} (${email})\nTéléphone : ${phone || "non renseigné"}\n\n${message}`,
             html: `
-        <div style="font-family: monospace; background: #000; color: #fff; padding: 20px; border: 1px solid #39FF14;">
-          <h2 style="color: #39FF14;">[SIGNAL_REÇU]</h2>
-          <p><strong>NOM:</strong> ${name}</p>
-          <p><strong>EMAIL:</strong> ${email}</p>
-          <hr style="border: 0; border-top: 1px solid #333;" />
-          <p style="white-space: pre-wrap;">${message}</p>
+        <div style="font-family: sans-serif; padding: 20px;">
+          <h2>Nouvelle demande d'appel</h2>
+          <p><strong>Nom :</strong> ${escapeHtml(name)}</p>
+          <p><strong>Email :</strong> ${escapeHtml(email)}</p>
+          <p><strong>Téléphone :</strong> ${escapeHtml(phone) || "non renseigné"}</p>
+          <hr />
+          <p style="white-space: pre-wrap;">${escapeHtml(message)}</p>
         </div>
       `,
         });
 
-        // 2. Vérification de l'erreur renvoyée par l'API Resend
         if (error) {
             console.error("Erreur API Resend:", error);
-            return { success: false, error: error.message };
+            return { success: false, error: "Envoi impossible" };
         }
 
-        // 3. Ici, TypeScript sait que data existe et contient l'id
         return { success: true, id: data?.id };
-
     } catch (error) {
-        // Erreur réseau ou plantage critique
         console.error("Erreur critique serveur:", error);
-        return { success: false, error: "Transmission failed" };
+        return { success: false, error: "Envoi impossible" };
     }
 }

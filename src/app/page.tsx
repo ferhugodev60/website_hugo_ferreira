@@ -1,11 +1,12 @@
 "use client";
 
-import TracklistTable from "@/components/TracklistTable";
+import Projects from "@/components/features/Projects";
 import Contact from "@/components/features/Contact";
 import ProjectModal from "@/components/features/ProjectModal";
-import Manifesto from "@/components/features/Manifesto";
+import Presentation from "@/components/features/Presentation";
+import Offers from "@/components/features/Offers";
+import Process from "@/components/features/Process";
 import Hero from "@/components/features/Hero";
-import Toolkit from "@/components/features/Toolkit";
 import SiteFooter from "@/components/layout/SiteFooter";
 
 export default function Home() {
@@ -17,14 +18,15 @@ export default function Home() {
             {/* Section d'accueil avec le bouton CTA */}
             <Hero />
 
+            <Presentation />
+
             <section id="projects" className="relative z-10 pb-10">
-                <TracklistTable />
+                <Projects />
             </section>
 
-            {/* Section Manifesto */}
-            <Manifesto />
+            <Process />
 
-            <Toolkit />
+            <Offers />
 
             {/* Section Contact avec effet de dégradé néon */}
             <section id="contact" className="relative z-10 bg-[linear-gradient(to_bottom,transparent,rgba(57,255,20,0.02))]">

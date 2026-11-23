@@ -3,14 +3,11 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
 import SocialLinks from "@/components/layout/SocialLinks";
-import { useSoundEffects } from "@/hooks/useSoundEffects";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
-    const { playClick } = useSoundEffects();
     const prefersReducedMotion = useReducedMotion();
 
     const { scrollYProgress } = useScroll({
@@ -26,15 +23,20 @@ export default function Hero() {
     const y = useTransform(scrollYProgress, [0, 1], [0, -150]);
 
     const scrollToProjects = () => {
-        playClick();
         const projectsSection = document.getElementById("projects");
         if (projectsSection) {
             projectsSection.scrollIntoView({ behavior: "smooth" });
         }
     };
 
+    const scrollToPresentation = (event: React.MouseEvent) => {
+        event.preventDefault();
+        document.getElementById("presentation")?.scrollIntoView({
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+        });
+    };
+
     const scrollToContact = () => {
-        playClick();
         const contactSection = document.getElementById("contact");
         if (contactSection) {
             contactSection.scrollIntoView({ behavior: "smooth" });
@@ -87,49 +89,51 @@ export default function Hero() {
                     style={{ scale, opacity, y }}
                     className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col items-center md:items-start text-center md:text-left"
                 >
-                    <header className="w-full flex flex-col items-center md:items-start">
-                        <span className="text-studio-neon text-[10px] uppercase tracking-[0.5em] font-bold block mb-4">
-                            Développeur Full-Stack
-                        </span>
-
-                        <div className="flex flex-col items-center md:items-start w-full">
-                            <h1 className="text-6xl md:text-9xl font-black text-white leading-none uppercase tracking-[0.02em] md:tracking-tighter">
+                    <h1 className="w-full flex flex-col items-center md:items-start">
+                        <span className="sr-only">Hugo Ferreira, création de sites web sur-mesure</span>
+                        <span aria-hidden="true" className="flex flex-col items-center md:items-start w-full">
+                            <span className="block text-6xl md:text-9xl font-black text-white leading-none uppercase tracking-[0.02em] md:tracking-tighter">
                                 HUGO
-                            </h1>
+                            </span>
                             {/* Mobile : texte plein et statique (pas de survol tactile possible) */}
-                            <h1 className="md:hidden text-6xl font-black text-white leading-none uppercase tracking-[0.02em] -mt-1">
+                            <span className="block md:hidden text-6xl font-black text-white leading-none uppercase tracking-[0.02em] -mt-1">
                                 FERREIRA
-                            </h1>
+                            </span>
                             {/* Desktop : effet interactif au survol de la souris */}
-                            <div className="hidden md:block h-[9rem] w-full -mt-6 -ml-2 overflow-visible">
+                            <span className="hidden md:block h-[9rem] w-full -mt-6 -ml-2 overflow-visible">
                                 <TextHoverEffect text="FERREIRA" />
-                            </div>
-                        </div>
-                    </header>
+                            </span>
+                        </span>
+                    </h1>
 
-                    <p className="max-w-2xl text-studio-accent/60 text-sm md:text-xl font-light leading-relaxed mt-2 md:mt-2 px-4 md:px-0">
-                        Développeur passionné par la création d&apos;interfaces web sur-mesure.
+                    <p className="max-w-2xl text-studio-accent/80 text-sm md:text-lg leading-relaxed mt-4">
+                        Vitrine, réservation ou boutique en ligne pour commerçants et artisans : je m&apos;occupe de tout, et
+                        je reste à vos côtés après la mise en ligne.
                     </p>
 
-                    <motion.div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-4 pt-8 md:pt-10 w-full">
+                    <motion.div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-4 pt-8 w-full">
                         <button
-                            onClick={scrollToProjects}
-                            className="group relative w-full sm:w-auto flex items-center justify-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-black/30 backdrop-blur-md border border-white/10 rounded-full overflow-hidden transition-all hover:border-studio-neon/50 cursor-pointer"
+                            onClick={scrollToContact}
+                            className="w-full sm:w-auto flex items-center justify-center px-8 py-4 bg-studio-neon rounded-full text-sm font-semibold text-black hover:bg-white transition-colors cursor-pointer"
                         >
-                            <div className="absolute inset-0 bg-studio-neon translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-                            <span className="relative z-10 text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.3em] text-white group-hover:text-black transition-colors">
-                                Découvrir mes projets
-                            </span>
-                            <ChevronDown size={16} className="hidden md:block relative z-10 text-studio-neon group-hover:text-black transition-colors animate-bounce" />
+                            Réserver mon appel gratuit
                         </button>
 
                         <button
-                            onClick={scrollToContact}
-                            className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 md:px-10 py-4 md:py-5 bg-black/30 backdrop-blur-md border border-white/10 rounded-full text-white/80 hover:text-studio-neon hover:border-studio-neon/40 text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.3em] transition-colors cursor-pointer"
+                            onClick={scrollToProjects}
+                            className="w-full sm:w-auto flex items-center justify-center px-8 py-4 bg-black/30 backdrop-blur-md border border-white/20 rounded-full text-sm font-semibold text-white hover:text-studio-neon hover:border-studio-neon/40 transition-colors cursor-pointer"
                         >
-                            Me contacter
+                            Voir mes réalisations
                         </button>
                     </motion.div>
+
+                    <a
+                        href="#presentation"
+                        onClick={scrollToPresentation}
+                        className="mt-4 py-2 text-xs md:text-sm text-white/70 underline-offset-4 hover:text-white hover:underline focus-visible:underline"
+                    >
+                        Qui suis-je ? Découvrez-moi en vidéo
+                    </a>
                 </motion.div>
 
                 {/* 4. SCROLL INDICATOR (desktop uniquement, prend trop de place sur mobile) */}

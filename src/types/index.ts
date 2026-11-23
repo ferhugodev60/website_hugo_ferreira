@@ -1,15 +1,15 @@
-export interface ProjectTrack {
+export interface Project {
     id: string;
     title: string;
-    artist: string;
-    trackName: string;
-    category: "Web" | "Design" | "Audio";
-    stack: string[];
+    category: "Web" | "Design";
     coverUrl?: string;
-    previewUrl: string;
+    /** Résumé court affiché sur la carte du projet. */
+    summary: string;
     context: string;
     approach: string;
     result: string;
     liveUrl?: string;
     comingSoon?: boolean;
+    /** Étiquette affichée à côté du titre (ex. « Projet perso », « À l'étude »). */
+    statusLabel?: string;
 }
