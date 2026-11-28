@@ -9,7 +9,7 @@ export const site = {
     /** Vidéo de présentation (ex. "/videos/presentation.mp4"). Un encadré « Vidéo à venir » s'affiche tant que c'est null. */
     video: {
         src: "/videos/presentation.mp4" as string | null,
-        poster: "/videos/presentation-poster.webp" as string | null,
+        poster: "/videos/presentation-miniature.webp" as string | null,
         title: "Vos clients vous cherchent sur Google : voici les 3 étapes pour que ce soit vous qu'ils choisissent",
     },
 

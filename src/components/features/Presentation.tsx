@@ -1,9 +1,20 @@
+"use client";
+
+import { useRef, useState } from "react";
 import { Play } from "lucide-react";
 import SectionHeader from "@/components/ui/section-header";
 import { site } from "@/data/site";
 
 export default function Presentation() {
     const { src, poster } = site.video;
+    const videoRef = useRef<HTMLVideoElement>(null);
+    // Les contrôles du navigateur n'apparaissent qu'après le lancement, pour ne pas masquer la miniature
+    const [started, setStarted] = useState(false);
+
+    const startVideo = () => {
+        setStarted(true);
+        videoRef.current?.play().catch(() => {});
+    };
 
     return (
         <section id="presentation" className="w-full max-w-6xl mx-auto px-6 py-20">
@@ -11,15 +22,31 @@ export default function Presentation() {
 
             <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03]">
                 {src ? (
-                    <video
-                        src={src}
-                        poster={poster ?? undefined}
-                        controls
-                        playsInline
-                        preload="none"
-                        aria-label={site.video.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                    />
+                    <>
+                        <video
+                            ref={videoRef}
+                            src={src}
+                            poster={poster ?? undefined}
+                            controls={started}
+                            playsInline
+                            preload="none"
+                            aria-label={site.video.title}
+                            onPlay={() => setStarted(true)}
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
+                        {!started && (
+                            <button
+                                type="button"
+                                onClick={startVideo}
+                                aria-label="Lancer la vidéo de présentation"
+                                className="group absolute inset-0 flex items-end justify-end p-4 md:p-8 cursor-pointer"
+                            >
+                                <span className="flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-black/60 text-studio-neon ring-1 ring-studio-neon/50 backdrop-blur-sm transition-transform duration-300 group-hover:scale-110 group-focus-visible:scale-110 group-focus-visible:ring-2">
+                                    <Play size={28} fill="currentColor" className="ml-1" aria-hidden="true" />
+                                </span>
+                            </button>
+                        )}
+                    </>
                 ) : (
                     // Emplacement réservé tant que la vidéo n'est pas renseignée dans src/data/site.ts
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
